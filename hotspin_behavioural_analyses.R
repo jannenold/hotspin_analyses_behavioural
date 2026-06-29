@@ -6,7 +6,7 @@
 #####################################################################
 
 #----------------------------------------------------------------
-# Analysis script and visualisation for cortical results
+# Analysis scrpt and visualisation for cortical results
 # Before running this script, the script PEEP_LOAD_IN_DATA.R 
 # should be run to load in data and settings
 #
@@ -17,7 +17,6 @@
 ## -------------------------
 ## Load in Packages
 ## ------------------------
-rm(list=ls())
 
 library(lintr)
 library(svglite)
@@ -141,33 +140,33 @@ summary_lmer_models_main_p<- data_pressure_long %>%
   group_by(VAS_int)%>%
   summarise_at(c('intensity'),mean,na.rm = T)
 
-  # Raincloud plot for heat data
-  raincloud_heat <- ggplot(data_heat_long, aes(x = VAS_int, y = intensity, fill = VAS_int)) +
-    PupillometryR::geom_flat_violin(position = position_nudge(x = .2, y = 0), adjust = 1.5, trim = T, alpha = .6, size = 0.25) +
-    geom_point(position = position_jitter(width = .05), size = .5, alpha = .6, shape = 21) +
-    geom_boxplot(width = .1, outlier.shape = NA, alpha = .5, size = 0.25) +
-    #stat_summary(fun = mean, geom = "point", shape = 23, size = .7, fill = "white") +
-    theme_classic() +
+# Raincloud plot for heat data
+raincloud_heat <- ggplot(data_heat_long, aes(x = VAS_int, y = intensity, fill = VAS_int)) +
+  PupillometryR::geom_flat_violin(position = position_nudge(x = .2, y = 0), adjust = 1.5, trim = T, alpha = .6, size = 0.25) +
+  geom_point(position = position_jitter(width = .05), size = .5, alpha = .6, shape = 21) +
+  geom_boxplot(width = .1, outlier.shape = NA, alpha = .5, size = 0.25) +
+  #stat_summary(fun = mean, geom = "point", shape = 23, size = .7, fill = "white") +
+  theme_classic() +
   scale_fill_manual(values = c("#ecd761", '#fa9c0e', "#af0404"))+
-    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-    geom_segment(data=summary_lmer_models_main_h,aes(x =c(0,0,0), xend = as.factor(VAS_int), y = c(intensity), yend = c(intensity)),size = 0.5,linetype = 3, colour = "#666666")+
-    ylab('Pain Intensity [?C]') + xlab('Stimulus Intensity [VAS]')  + ggtitle('Heat')
+  theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+  geom_segment(data=summary_lmer_models_main_h,aes(x =c(0,0,0), xend = as.factor(VAS_int), y = c(intensity), yend = c(intensity)),size = 0.5,linetype = 3, colour = "#666666")+
+  ylab('Pain Intensity [°C]') + xlab('Stimulus Intensity [VAS]')  + ggtitle('Heat')
 
-  raincloud_heat
+raincloud_heat
 
-  # Raincloud plot for pressure data
-  raincloud_pressure <- ggplot(data_pressure_long, aes(x = VAS_int, y = intensity, fill = VAS_int)) +
-    PupillometryR::geom_flat_violin(position = position_nudge(x = .2, y = 0), adjust = 1.5, trim = T, alpha = .6, size = 0.25) +
-    geom_point(position = position_jitter(width = .05), size = .5, alpha = .6, shape = 21) +
-    geom_boxplot(width = .1, outlier.shape = NA, alpha = .5, size = 0.25) +
-    #stat_summary(fun = mean, geom = "point", shape = 23, size = .7, fill = "white") +
-    theme_classic() +
-    scale_fill_manual(values = c("#969BF2", '#1F248C', "#020659")) +
-    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-    geom_segment(data=summary_lmer_models_main_p,aes(x =c(0,0,0), xend = as.factor(VAS_int), y = c(intensity), yend = c(intensity)),size = 0.5,linetype = 3, colour = "#666666")+
-    ylab('Pain Intensity [kPa]') + xlab('Stimulus Intensity [VAS]') + ylim(0, 100) + ggtitle('Pressure')
+# Raincloud plot for pressure data
+raincloud_pressure <- ggplot(data_pressure_long, aes(x = VAS_int, y = intensity, fill = VAS_int)) +
+  PupillometryR::geom_flat_violin(position = position_nudge(x = .2, y = 0), adjust = 1.5, trim = T, alpha = .6, size = 0.25) +
+  geom_point(position = position_jitter(width = .05), size = .5, alpha = .6, shape = 21) +
+  geom_boxplot(width = .1, outlier.shape = NA, alpha = .5, size = 0.25) +
+  #stat_summary(fun = mean, geom = "point", shape = 23, size = .7, fill = "white") +
+  theme_classic() +
+  scale_fill_manual(values = c("#969BF2", '#1F248C', "#020659")) +
+  theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+  geom_segment(data=summary_lmer_models_main_p,aes(x =c(0,0,0), xend = as.factor(VAS_int), y = c(intensity), yend = c(intensity)),size = 0.5,linetype = 3, colour = "#666666")+
+  ylab('Pain Intensity [kPa]') + xlab('Stimulus Intensity [VAS]') + ylim(0, 100) + ggtitle('Pressure')
 
-  raincloud_pressure
+raincloud_pressure
 
 
 # ------------- Plot FTP (weight corrected)
@@ -184,7 +183,7 @@ raincloud_pwc <- ggplot(hotspin_calib_pwc, aes(x = "", y = pwc)) +
   #stat_summary(fun = mean, geom = "point", shape = 23, size = 2, fill = "#000000") +
   theme_classic() +
   scale_fill_manual(values = c("#fcac00")) +
-   theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+  theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
   ylab('FTP [W/kg]') + xlab('') + ggtitle('FTP (weight-corrected) Distribution') +
   coord_flip()
 
@@ -210,7 +209,7 @@ chi_square_test <- chisq.test(cycle_phase_table)
 # Print the results
 print(chi_square_test)
 
-# caöcuölate distribution of cycle phase within both days
+# caÃ¶cuÃ¶late distribution of cycle phase within both days
 cycle_phase_distribution_day1 <- table(hotspin_menstr_ccle$cycle_phase[hotspin_menstr_ccle$day == 1])
 cycle_phase_distribution_day2 <- table(hotspin_menstr_ccle$cycle_phase[hotspin_menstr_ccle$day == 2])
 
@@ -231,9 +230,9 @@ cycle_phase_distribution <- ggplot(hotspin_menstr_ccle, aes(x = cycle_phase, fil
   ylab('Count') +
   ggtitle('Distribution of Cycle Phase') +
   scale_x_continuous(breaks = 0:3, labels = c("Hormonal\ncontraceptives", "Follicular", "Ovulation", "Luteal")) 
-  #annotate("text", x = 3.5, y = max(table(hotspin_menstr_ccle$cycle_phase, hotspin_menstr_ccle$day)) + 1, 
-  #         label = paste("Chi-squared (", chi_square_test$parameter, ") =", round(chi_square_test$statistic, 2), "p =", round(chi_square_test$p.value, 2)), 
-  #         size = 2, hjust = 1)
+#annotate("text", x = 3.5, y = max(table(hotspin_menstr_ccle$cycle_phase, hotspin_menstr_ccle$day)) + 1, 
+#         label = paste("Chi-squared (", chi_square_test$parameter, ") =", round(chi_square_test$statistic, 2), "p =", round(chi_square_test$p.value, 2)), 
+#         size = 2, hjust = 1)
 
 cycle_phase_distribution
 
@@ -259,8 +258,8 @@ summary_ftp<- hotspin_peep_ftp %>%
   group_by(group)%>%
   summarise_at(c('pwc'),mean,na.rm = T)
 
-  sd_group1 <- sd(hotspin_peep_ftp$pwc[hotspin_peep_ftp$group == 1], na.rm = TRUE)
-  print(sd_group1)
+sd_group1 <- sd(hotspin_peep_ftp$pwc[hotspin_peep_ftp$group == 1], na.rm = TRUE)
+print(sd_group1)
 
 # plot raincloud plots of the pwc with hue by group
 raincloud_pwc_group <- ggplot(hotspin_peep_ftp, aes(x = group, y = pwc, fill = group)) +
@@ -376,33 +375,33 @@ summary_weight<- hotspin_peep_weight_height %>%
   group_by(group)%>%
   summarise_at(c('weight'),mean,na.rm = T)
 
-  sd_group1 <- sd(hotspin_peep_weight_height$weight[hotspin_peep_weight_height$group == 1], na.rm = TRUE)
-  print(sd_group1)
+sd_group1 <- sd(hotspin_peep_weight_height$weight[hotspin_peep_weight_height$group == 1], na.rm = TRUE)
+print(sd_group1)
 
 summary_height <- hotspin_peep_weight_height %>%
   group_by(group)%>%
   summarise_at(c('height'),mean,na.rm = T)
 
-  sd_group1 <- sd(hotspin_peep_weight_height$height[hotspin_peep_weight_height$group == 1], na.rm = TRUE)
-  print(sd_group1)
+sd_group1 <- sd(hotspin_peep_weight_height$height[hotspin_peep_weight_height$group == 1], na.rm = TRUE)
+print(sd_group1)
 
 
-  raincloud_weight_group <- ggplot(hotspin_peep_weight_height, aes(x = group, y = weight, fill = group)) +
-    PupillometryR::geom_flat_violin(position = position_nudge(x = .2, y = 0), adjust = 1.5, trim = T, alpha = .8, size = 0.25) +
-    geom_point(position = position_jitter(width = .1), size = .5, alpha = .6, shape = 21) +
-    geom_boxplot(width = .1, outlier.shape = NA, alpha = .5, size = 0.25) +
-    theme_classic() +
-    scale_fill_manual(values = c("#C75302", "#8480F2", "#1C02C7")) +
-    theme(legend.key.size = unit(0.25, 'cm'), axis.title = element_text(size = axis_title_size, family = "Helvetica"), axis.text = element_text(size = axis_text_size, colour = 'black', family = "Helvetica"), plot.title = element_text(size = plot_title_size, family = "Helvetica"), legend.title = element_text(size = axis_title_size, family = "Helvetica"), legend.text = element_text(size = legend_text_size, family = "Helvetica"), strip.text.x = element_text(size = legend_text_size, family = "Helvetica")) +
-    ylab('Weight (kg)') + xlab('Group') + ggtitle('Weight (kg)') +
-    coord_flip()+
-    geom_segment(data=summary_weight,aes(x =c(0,0,0), xend = as.factor(group), y = c(weight), yend = c(weight)),size = 0.5,linetype = 3,colour = '#666666') +
-    scale_x_discrete(labels = c("0" = "Males (Previous Study)", "1" = "Females (Previous Study)", "2" = "Females (Current Study)"))+
-    xlab('')
-  
-  raincloud_weight_group
-  
-  
+raincloud_weight_group <- ggplot(hotspin_peep_weight_height, aes(x = group, y = weight, fill = group)) +
+  PupillometryR::geom_flat_violin(position = position_nudge(x = .2, y = 0), adjust = 1.5, trim = T, alpha = .8, size = 0.25) +
+  geom_point(position = position_jitter(width = .1), size = .5, alpha = .6, shape = 21) +
+  geom_boxplot(width = .1, outlier.shape = NA, alpha = .5, size = 0.25) +
+  theme_classic() +
+  scale_fill_manual(values = c("#C75302", "#8480F2", "#1C02C7")) +
+  theme(legend.key.size = unit(0.25, 'cm'), axis.title = element_text(size = axis_title_size, family = "Helvetica"), axis.text = element_text(size = axis_text_size, colour = 'black', family = "Helvetica"), plot.title = element_text(size = plot_title_size, family = "Helvetica"), legend.title = element_text(size = axis_title_size, family = "Helvetica"), legend.text = element_text(size = legend_text_size, family = "Helvetica"), strip.text.x = element_text(size = legend_text_size, family = "Helvetica")) +
+  ylab('Weight (kg)') + xlab('Group') + ggtitle('Weight (kg)') +
+  coord_flip()+
+  geom_segment(data=summary_weight,aes(x =c(0,0,0), xend = as.factor(group), y = c(weight), yend = c(weight)),size = 0.5,linetype = 3,colour = '#666666') +
+  scale_x_discrete(labels = c("0" = "Males (Previous Study)", "1" = "Females (Previous Study)", "2" = "Females (Current Study)"))+
+  xlab('')
+
+raincloud_weight_group
+
+
 
 
 # calculate two sample t test for weight
@@ -418,7 +417,7 @@ raincloud_height_group <- ggplot(hotspin_peep_weight_height, aes(x = group, y = 
   geom_boxplot(width = .1, outlier.shape = NA, alpha = .5, size = 0.25) +
   theme_classic() +
   theme(legend.key.size = unit(0.25, 'cm'), axis.title = element_text(size = axis_title_size, family = "Helvetica"), axis.text = element_text(size = axis_text_size, colour = 'black', family = "Helvetica"), plot.title = element_text(size = plot_title_size, family = "Helvetica"), legend.title = element_text(size = axis_title_size, family = "Helvetica"), legend.text = element_text(size = legend_text_size, family = "Helvetica"), strip.text.x = element_text(size = legend_text_size, family = "Helvetica")) +
-   ylab('Height (cm)') + xlab('Group') + ggtitle('Height (cm)') +
+  ylab('Height (cm)') + xlab('Group') + ggtitle('Height (cm)') +
   scale_fill_manual(values = c("#C75302", "#8480F2", "#1C02C7")) +
   coord_flip()+
   geom_segment(data=summary_height,aes(x =c(0,0,0), xend = as.factor(group), y = c(height), yend = c(height)),size = 0.5,linetype = 3,colour = '#666666') +
@@ -462,26 +461,26 @@ summary_age <- hotspin_peep_weight_height %>%
   group_by(group) %>%
   summarise_at(c('age'), mean, na.rm = TRUE)
 
-  # Calculate age range for group 1
-  age_range_group1 <- range(hotspin_peep_weight_height$age[hotspin_peep_weight_height$group == 2], na.rm = TRUE)
-  print(age_range_group1)
+# Calculate age range for group 1
+age_range_group1 <- range(hotspin_peep_weight_height$age[hotspin_peep_weight_height$group == 2], na.rm = TRUE)
+print(age_range_group1)
 
-  
-  # plot raincloud plots of the pwc with hue by group
-  raincloud_age_group <- ggplot(hotspin_peep_weight_height, aes(x = group, y = age, fill = group)) +
-    PupillometryR::geom_flat_violin(position = position_nudge(x = .2, y = 0), adjust = 1.5, trim = T, alpha = .8, size = 0.25) +
-    geom_point(position = position_jitter(width = .1), size = .5, alpha = .6, shape = 21) +
-    geom_boxplot(width = .1, outlier.shape = NA, alpha = .5, size = 0.25) +
-    theme_classic() +
-    scale_fill_manual(values = c("#C75302", "#8480F2", "#1C02C7")) +
-    theme(legend.key.size = unit(0.25, 'cm'), axis.title = element_text(size = axis_title_size, family = "Helvetica"), axis.text = element_text(size = axis_text_size, colour = 'black', family = "Helvetica"), plot.title = element_text(size = plot_title_size, family = "Helvetica"), legend.title = element_text(size = axis_title_size, family = "Helvetica"), legend.text = element_text(size = legend_text_size, family = "Helvetica"), strip.text.x = element_text(size = legend_text_size, family = "Helvetica")) +
-    ylab('Age (years)') + xlab('Group') + ggtitle('Age (years)') +
-    coord_flip()+
-    geom_segment(data=summary_age,aes(x =c(0,0,0), xend = as.factor(group), y = c(age), yend = c(age)),size = 0.5,linetype = 3,colour = '#666666') +
-    scale_x_discrete(labels = c("0" = "Males (Previous Study)", "1" = "Females (Previous Study)", "2" = "Females (Current Study)"))+
-    xlab('')
-  
-  raincloud_age_group
+
+# plot raincloud plots of the pwc with hue by group
+raincloud_age_group <- ggplot(hotspin_peep_weight_height, aes(x = group, y = age, fill = group)) +
+  PupillometryR::geom_flat_violin(position = position_nudge(x = .2, y = 0), adjust = 1.5, trim = T, alpha = .8, size = 0.25) +
+  geom_point(position = position_jitter(width = .1), size = .5, alpha = .6, shape = 21) +
+  geom_boxplot(width = .1, outlier.shape = NA, alpha = .5, size = 0.25) +
+  theme_classic() +
+  scale_fill_manual(values = c("#C75302", "#8480F2", "#1C02C7")) +
+  theme(legend.key.size = unit(0.25, 'cm'), axis.title = element_text(size = axis_title_size, family = "Helvetica"), axis.text = element_text(size = axis_text_size, colour = 'black', family = "Helvetica"), plot.title = element_text(size = plot_title_size, family = "Helvetica"), legend.title = element_text(size = axis_title_size, family = "Helvetica"), legend.text = element_text(size = legend_text_size, family = "Helvetica"), strip.text.x = element_text(size = legend_text_size, family = "Helvetica")) +
+  ylab('Age (years)') + xlab('Group') + ggtitle('Age (years)') +
+  coord_flip()+
+  geom_segment(data=summary_age,aes(x =c(0,0,0), xend = as.factor(group), y = c(age), yend = c(age)),size = 0.5,linetype = 3,colour = '#666666') +
+  scale_x_discrete(labels = c("0" = "Males (Previous Study)", "1" = "Females (Previous Study)", "2" = "Females (Current Study)"))+
+  xlab('')
+
+raincloud_age_group
 
 # two sample t test for age
 t.test(hotspin_peep_weight_height$age[hotspin_peep_weight_height$group == 2], hotspin_peep_weight_height$age[hotspin_peep_weight_height$group == 1], paired = F, alternative = "two.sided")
@@ -501,7 +500,7 @@ hotspin_complete_data_hr_watt <- read.csv('C:/Users/user/Desktop/projects/HotSpi
 summary_data_watt <- hotspin_complete_data_hr_watt %>%
   group_by(subject,exercise_intensity)%>%
   summarise_at(c('watt_mean'),mean,na.rm = T) %>%
-    # Convert exercise_intensity to integers
+  # Convert exercise_intensity to integers
   mutate(exercise_intensity = ifelse(exercise_intensity == "Low", 0, 1))
 
 names(summary_data_watt) <- c('subject','exercise_intensity','watt')
@@ -628,7 +627,7 @@ power_cycling
 summary_data_hr_plot <- hotspin_complete_data_hr_watt %>%
   group_by(subject,exercise_intensity)%>%
   summarise_at(c('hr_mean'),mean,na.rm = T) %>%
-    # Convert exercise_intensity to integers
+  # Convert exercise_intensity to integers
   mutate(exercise_intensity = ifelse(exercise_intensity == "Low", 0, 1))
 
 names(summary_data_hr_plot) <- c('subject','exercise_intensity','hr')
@@ -755,7 +754,7 @@ hr_cycling
 exercise_data_plot <- hotspin_complete_data_hr_watt %>%
   group_by(subject,exercise_intensity)%>%
   summarise_at(c('exercise_rating_mean'),mean,na.rm = T) %>%
-    # Convert exercise_intensity to integers
+  # Convert exercise_intensity to integers
   mutate(exercise_intensity = ifelse(exercise_intensity == "Low", 0, 1))
 
 names(exercise_data_plot) <- c('subject','exercise_intensity','exercise_rating')
@@ -895,8 +894,8 @@ summary_data_watt <- summary_data_watt %>%
   group_by(subject,exercise_intensity)%>%
   summarise_at(c('rel_power'),mean,na.rm = T)
 
-  summary_data_watt <- summary_data_watt %>%
-    mutate(exercise_intensity = ifelse(exercise_intensity == "High", 1, 0))
+summary_data_watt <- summary_data_watt %>%
+  mutate(exercise_intensity = ifelse(exercise_intensity == "High", 1, 0))
 #---------------- Statistics 
 
 t.test(summary_data_watt$rel_power[summary_data_watt$exercise_intensity == 1],summary_data_watt$rel_power[summary_data_watt$exercise_intensity == 0],paired = T,alternative = "two.sided")
@@ -1191,7 +1190,7 @@ ratings_pressure <- ggplot(summary_sub_online_ratings_pressure,aes(time,online_r
   ylim(0,150)+
   ggtitle("")
 
- ratings_pressure 
+ratings_pressure 
 
 
 ratings_heat <- ggplot(summary_sub_online_ratings_heat,aes(time,online_rating,fill = VAS_intensity,colour = VAS_intensity))+
@@ -1227,42 +1226,42 @@ ratings_heat <- ggplot(summary_sub_online_ratings_heat,aes(time,online_rating,fi
   ylim(0,150)+
   ggtitle("")
 
- ratings_heat 
+ratings_heat 
 
 # --------------------------------------------------------
 #  Online Ratings and Exercise Intenstiy (across VAS)
 #---------------------------------------------------------
- 
- #-------- Statistics ------
 
- #load in data
- sub_online_ratings <- read.csv('C:/Users/user/Desktop/projects/HotSpin/Data/LogExperiment/MAIN/sub_online_heat_and_pressure_clean.csv',sep = ',',header = T)
- 
- # Calculate summary statistic for better visualisation
- summary_sub_online_ratings<- sub_online_ratings %>%
-   group_by(subject,time,exercise_intensity,modality)%>%
-   summarise_at(c('online_rating'),mean,na.rm = T)
- 
+#-------- Statistics ------
+
+#load in data
+sub_online_ratings <- read.csv('C:/Users/user/Desktop/projects/HotSpin/Data/LogExperiment/MAIN/sub_online_heat_and_pressure_clean.csv',sep = ',',header = T)
+
+# Calculate summary statistic for better visualisation
+summary_sub_online_ratings<- sub_online_ratings %>%
+  group_by(subject,time,exercise_intensity,modality)%>%
+  summarise_at(c('online_rating'),mean,na.rm = T)
+
 summary_sub_online_ratings$modality <- as.factor(summary_sub_online_ratings$modality)
- summary_sub_online_ratings$exercise_intensity <- as.factor(summary_sub_online_ratings$exercise_intensity)
+summary_sub_online_ratings$exercise_intensity <- as.factor(summary_sub_online_ratings$exercise_intensity)
 
- 
- # Filter dataframes for heat and pressure
- summary_sub_online_ratings_heat <- summary_sub_online_ratings %>% filter(modality == 2)
- summary_sub_online_ratings_pressure <- summary_sub_online_ratings %>% filter(modality == 1)
 
- # Heat
- lme_model_heat_online_rating <- lmer(online_rating ~  exercise_intensity*time + (1|subject), data = summary_sub_online_ratings_heat)
- summary(lme_model_heat_online_rating)
- 
- # Pressure
- lme_model_pressure_online_rating <- lmer(online_rating ~  exercise_intensity*time + (1|subject), data = summary_sub_online_ratings_pressure)
- summary(lme_model_pressure_online_rating)
- 
- 
- #-------- Visualisation ------
+# Filter dataframes for heat and pressure
+summary_sub_online_ratings_heat <- summary_sub_online_ratings %>% filter(modality == 2)
+summary_sub_online_ratings_pressure <- summary_sub_online_ratings %>% filter(modality == 1)
 
- 
+# Heat
+lme_model_heat_online_rating <- lmer(online_rating ~  exercise_intensity*time + (1|subject), data = summary_sub_online_ratings_heat)
+summary(lme_model_heat_online_rating)
+
+# Pressure
+lme_model_pressure_online_rating <- lmer(online_rating ~  exercise_intensity*time + (1|subject), data = summary_sub_online_ratings_pressure)
+summary(lme_model_pressure_online_rating)
+
+
+#-------- Visualisation ------
+
+
 #load ad in data
 sub_online_ratings <- read.csv('C:/Users/user/Desktop/projects/HotSpin/Data/LogExperiment/MAIN/sub_online_heat_and_pressure_clean.csv',sep = ',',header = T)
 
@@ -1300,8 +1299,8 @@ heat_online_rating_across_VAS <- ggplot(summary_sub_online_ratings_heat, aes(tim
   geom_rect(data = data.frame(xmin = 0, xmax = 17.1, ymin = 0, ymax = 102 + 2),
             aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
             fill = "#cccccc", alpha = 0.5, inherit.aes = FALSE) +
-
-
+  
+  
   geom_ribbon(aes(ymin = online_rating - se, ymax = online_rating + se), alpha = 0.2, show.legend = FALSE, colour = NA) +
   geom_line(size = 1, show.legend = TRUE) +
   
@@ -1323,21 +1322,21 @@ heat_online_rating_across_VAS <- ggplot(summary_sub_online_ratings_heat, aes(tim
   xlab('Time [sec]') +
   ylab('Pain Rating [VAS]') +
   
-
-   geom_segment(data = summary_sub_online_ratings, aes(x = ifelse(modality == '2', 0.95, NA), 
+  
+  geom_segment(data = summary_sub_online_ratings, aes(x = ifelse(modality == '2', 0.95, NA), 
                                                       xend = ifelse(modality == '2', 16.1, NA), 
                                                       y = 90, yend = 90), na.rm = TRUE, colour = "black", linewidth = 1) +
   geom_segment(data = summary_sub_online_ratings, aes(x = 0, xend =  17.1, y = 102 + 2, yend = 102 + 2), na.rm = TRUE, colour = "black", linewidth = 1) +
   
   # Adding tick marks at segment ends only in the correct facet
-    geom_segment(data = subset(summary_sub_online_ratings, modality == '2'), aes(x = 0.95, xend = 0.95, y = 88, yend = 92), na.rm = TRUE, colour = "black", linewidth = 1) +
+  geom_segment(data = subset(summary_sub_online_ratings, modality == '2'), aes(x = 0.95, xend = 0.95, y = 88, yend = 92), na.rm = TRUE, colour = "black", linewidth = 1) +
   geom_segment(data = subset(summary_sub_online_ratings, modality == '2'), aes(x = 16, xend = 16, y = 88, yend = 92), na.rm = TRUE, colour = "black", linewidth = 1) +
   geom_segment(data = summary_sub_online_ratings, aes(x = 0, xend = 0, y = 99.5 + 2 , yend = 104.5 + 2 ), na.rm = TRUE, colour = "black", linewidth = 1) +
   geom_segment(data = summary_sub_online_ratings, aes(x = 17.1, xend = 17.1, y = 99.5 + 2 , yend = 104.5 + 2 ), na.rm = TRUE, colour = "black", linewidth = 1) +
   
   #geom_text(aes(x = 10, y = 104 + 3, label = "Stimulus Duration"), size = 1.25, colour = "black") +
   #geom_text(data = subset(summary_sub_online_ratings, modality == '1'), aes(x = 10, y = 93, label = "Plateau Duration"), size = 1, colour = "black") +
-
+  
   geom_hline(yintercept = 0)+
   ggtitle('Heat')
 
@@ -1354,8 +1353,8 @@ pressure_online_rating_across_VAS <- ggplot(summary_sub_online_ratings_pressure,
   geom_rect(data = data.frame(xmin = 0, xmax = 17.1, ymin = 0, ymax = 102 + 2),
             aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
             fill = "#cccccc", alpha = 0.5, inherit.aes = FALSE) +
-
-
+  
+  
   geom_ribbon(aes(ymin = online_rating - se, ymax = online_rating + se), alpha = 0.2, show.legend = FALSE, colour = NA) +
   geom_line(size = 1, show.legend = TRUE) +
   
@@ -1377,14 +1376,14 @@ pressure_online_rating_across_VAS <- ggplot(summary_sub_online_ratings_pressure,
   xlab('Time [sec]') +
   ylab('Pain Rating [VAS]') +
   
-
-   geom_segment(data = summary_sub_online_ratings, aes(x = ifelse(modality == '1', 1.5, NA), 
+  
+  geom_segment(data = summary_sub_online_ratings, aes(x = ifelse(modality == '1', 1.5, NA), 
                                                       xend = ifelse(modality == '1', 16.5, NA), 
                                                       y = 90, yend = 90), na.rm = TRUE, colour = "black", linewidth = 1) +
   geom_segment(data = summary_sub_online_ratings, aes(x = 0, xend =  17.1, y = 102 + 2, yend = 102 + 2), na.rm = TRUE, colour = "black", linewidth = 1) +
   
   # Adding tick marks at segment ends only in the correct facet
-    geom_segment(data = subset(summary_sub_online_ratings, modality == '2'), aes(x = 1.5, xend = 1.5, y = 88, yend = 92), na.rm = TRUE, colour = "black", linewidth = 1) +
+  geom_segment(data = subset(summary_sub_online_ratings, modality == '2'), aes(x = 1.5, xend = 1.5, y = 88, yend = 92), na.rm = TRUE, colour = "black", linewidth = 1) +
   geom_segment(data = subset(summary_sub_online_ratings, modality == '2'), aes(x = 16.5, xend = 16.5, y = 88, yend = 92), na.rm = TRUE, colour = "black", linewidth = 1) +
   geom_segment(data = summary_sub_online_ratings, aes(x = 0, xend = 0, y = 99.5 + 2 , yend = 104.5 + 2 ), na.rm = TRUE, colour = "black", linewidth = 1) +
   geom_segment(data = summary_sub_online_ratings, aes(x = 17.1, xend = 17.1, y = 99.5 + 2 , yend = 104.5 + 2 ), na.rm = TRUE, colour = "black", linewidth = 1) +
@@ -1462,7 +1461,7 @@ summary_sub_online_ratings$exercise_intensity <- as.factor(summary_sub_online_ra
 summary_sub_online_ratings$time <- as.numeric(summary_sub_online_ratings$time)
 
 (online_rating_VAS <-ggplot(summary_sub_online_ratings,aes(time,online_rating,fill = exercise_intensity,colour = exercise_intensity))+
-   
+    
     geom_ribbon(aes(ymin = online_rating-se,ymax = online_rating+se),alpha = 0.2,show.legend = F,colour = NA)+
     #geom_point(size = 1,show.legend = F)+
     geom_line(size = 0.6,show.legend = T)+
@@ -1775,16 +1774,16 @@ mean_ratings_sub <- sub_online_ratings %>%
 
 # Calculate the max rating for each exercise intensity, VAS intensity, modality, and subject
 sub_max_online_ratings <- mean_ratings_sub %>%
-    group_by(subject, exercise_intensity, modality, VAS_intensity) %>%
-    summarise_at(c('online_rating'),max,na.rm = T)
+  group_by(subject, exercise_intensity, modality, VAS_intensity) %>%
+  summarise_at(c('online_rating'),max,na.rm = T)
 
 # Replace Inf values with NA
 sub_max_online_ratings$online_rating[is.infinite(sub_max_online_ratings$online_rating)] <- NA
 
 # calculat ethe mean of the max ratings across subjects
- max_online_ratings <- sub_max_online_ratings %>%
-    group_by(exercise_intensity, modality, VAS_intensity) %>%
-    summarise_at(c('online_rating'),mean,na.rm = T)
+max_online_ratings <- sub_max_online_ratings %>%
+  group_by(exercise_intensity, modality, VAS_intensity) %>%
+  summarise_at(c('online_rating'),mean,na.rm = T)
 
 
 # Calculating SE for within design 
@@ -1826,10 +1825,10 @@ max_ratings_whole <- ggplot(max_online_ratings, aes(x = VAS_intensity, y = onlin
   xlab('Stimulus Intensity [VAS]') +
   ylab('Max Pain Rating [VAS]') +
   ggtitle('') +
-        ylim(0, 150)+
+  ylim(0, 150)+
   facet_wrap(~modality, labeller = as_labeller(c('1' = 'Pressure', '2' = 'Heat')),ncol = 1)
 
-  max_ratings_whole
+max_ratings_whole
 
 
 
@@ -1850,12 +1849,12 @@ mean_ratings_sub_pressure <- sub_online_ratings_max_pressure %>%
 
 # Calculate the max rating for each exercise intensity, VAS intensity, modality, and subject
 sub_max_online_ratings_heat <- mean_ratings_sub_heat %>%
-    group_by(subject, exercise_intensity, VAS_intensity,trial,block) %>%
-    summarise_at(c('online_rating'),max,na.rm = T)
+  group_by(subject, exercise_intensity, VAS_intensity,trial,block) %>%
+  summarise_at(c('online_rating'),max,na.rm = T)
 
 sub_max_online_ratings_pressure <- mean_ratings_sub_pressure %>%
-    group_by(subject, exercise_intensity, VAS_intensity,trial,block) %>%
-    summarise_at(c('online_rating'),max,na.rm = T)
+  group_by(subject, exercise_intensity, VAS_intensity,trial,block) %>%
+  summarise_at(c('online_rating'),max,na.rm = T)
 
 # Replace Inf values with NA
 sub_max_online_ratings_heat$online_rating[is.infinite(sub_max_online_ratings_heat$online_rating)] <- NA
@@ -2005,1530 +2004,1168 @@ sub_max_online_ratings_diff$VAS_intensity <- as.factor(sub_max_online_ratings_di
 )
 
 
-# 
-# #----------------------------------------
-# # Peak Pain ratings and FTP
-# #---------------------------------------
-# # Calculate mean difference ratings by subject
-# mean_diff_ratings_sub <- mean_ratings_diff_sub %>%
-#   group_by(subject, modality) %>%
-#   summarise_at(c('diff_ints'),mean,na.rm = T)
-# 
-# # Calculate mean difference ratings plateau by subject
-# mean_diff_ratings_plateau_sub <- mean_ratings_diff_plateau_sub %>%
-#   group_by(subject, modality) %>%
-#   summarise_at(c('diff_ints'),mean,na.rm = T)
-# 
-# # Calculate max difference ratings by subject
-# max_diff_ratings_sub <- sub_max_online_ratings_diff %>%
-#   group_by(subject, modality) %>%
-#   summarise_at(c('diff_ints'),mean,na.rm = T)
-# 
-#   # Merge data frames by subject and modality
-# diff_ratings_combined <- mean_diff_ratings_sub
-# diff_ratings_combined$diff_ints_plateau <- mean_diff_ratings_plateau_sub$diff_ints
-# diff_ratings_combined$diff_ints_max <- max_diff_ratings_sub$diff_ints
-#   
-# # Add the hotspin_calib$pwc by subject
-# diff_ratings_combined <- diff_ratings_combined %>%
-#   left_join(hotspin_calib %>% select(subject, pwc), by = "subject")
-# 
-# diff_ratings_combined$modality <- as.factor(diff_ratings_combined$modality)
-#   
-#   # Plot correlations
-#   correlation_plot <- ggplot(diff_ratings_combined, aes(x = pwc, y = diff_ints,  color = modality, fill = modality)) +
-#   geom_point(shape = 21, size = 1,alpha = 0.5) +
-#     geom_smooth(method = "lm", se = T,alpha = 0.2) +
-#     facet_wrap(~modality, labeller = as_labeller(c('1' = 'Pressure', '2' = 'Heat'))) +
-#     theme_classic() +
-#      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-#     
-#     scale_color_manual(labels = c("Pressure", "Heat"),
-#                        values = c("#1C02C7", "#C75302"))+
-#     scale_fill_manual(labels = c("Pressure", "Heat"),
-#                       values = c("#1C02C7", "#C75302"))+
-#     ylab("Mean Difference Ratings [LI-HI]") +
-#     xlab("FTP [W/kg]") +
-#     ggtitle("Correlation between  FTP (weight-corrected) and Mean Difference Ratings (Stimulus Duration)")
-# 
-#   correlation_plot_plateau <- ggplot(diff_ratings_combined, aes(x = pwc, y = diff_ints_plateau,  color = modality, fill = modality)) +
-#   geom_point(shape = 21, size = 1,alpha = 0.5) +
-#     geom_smooth(method = "lm", se = T,alpha = 0.2) +
-#     facet_wrap(~modality, labeller = as_labeller(c('1' = 'Pressure', '2' = 'Heat'))) +
-#     theme_classic() +
-#      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-#     
-#         scale_color_manual(labels = c("Pressure", "Heat"),
-#                        values = c("#1C02C7", "#C75302"))+
-#     scale_fill_manual(labels = c("Pressure", "Heat"),
-#                       values = c("#1C02C7", "#C75302"))+
-# 
-#     xlab("FTP [W/kg]") +
-#     ylab("Mean Difference Ratings [LI-HI]") +
-#     ggtitle("Correlation between  FTP (weight-corrected) and Mean Difference Ratings (Plateau Duration)")
-# 
-# 
-# correlation_plot_max <- ggplot(diff_ratings_combined, aes(x = pwc, y = diff_ints_max, color = modality, fill = modality)) +
-#   geom_point(shape = 21, size = 1,alpha = 0.5) +
-#   geom_smooth(method = "lm", se = T, alpha = 0.2) +
-#   facet_wrap(~modality, labeller = as_labeller(c('1' = 'Pressure', '2' = 'Heat'))) +
-#   theme_classic() +
-#    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-#     
-#     scale_color_manual(labels = c("Pressure", "Heat"),
-#                        values = c("#1C02C7", "#C75302"))+
-#     scale_fill_manual(labels = c("Pressure", "Heat"),
-#                       values = c("#1C02C7", "#C75302"))+
-#   xlab("FTP [W/kg]") +
-#   ylab("Max Difference Ratings [LI-HI]") +
-#   ggtitle("Correlation between FTP (weight-corrected) and Max Difference Ratings")
-# 
-# 
-#   # Calculate correlations and p-values for heat and pressure separately
-# 
-#   # Function to calculate correlation and p-value
-#   correlation_test <- function(x, y) {
-#     cor_test <- cor.test(x, y, use = "complete.obs")
-#     list(correlation = cor_test$estimate, p_value = cor_test$p.value)
-#   }
-# 
-#   # Correlation between FTP and mean difference ratings (whole stimulus duration)
-#   correlation_mean_diff_heat <- correlation_test(diff_ratings_combined$pwc[diff_ratings_combined$modality == 2], diff_ratings_combined$diff_ints[diff_ratings_combined$modality == 2])
-#   correlation_mean_diff_pressure <- correlation_test(diff_ratings_combined$pwc[diff_ratings_combined$modality == 1], diff_ratings_combined$diff_ints[diff_ratings_combined$modality == 1])
-# 
-#   # Correlation between FTP and mean difference ratings (plateau duration)
-#   correlation_mean_diff_plateau_heat <- correlation_test(diff_ratings_combined$pwc[diff_ratings_combined$modality == 2], diff_ratings_combined$diff_ints_plateau[diff_ratings_combined$modality == 2])
-#   correlation_mean_diff_plateau_pressure <- correlation_test(diff_ratings_combined$pwc[diff_ratings_combined$modality == 1], diff_ratings_combined$diff_ints_plateau[diff_ratings_combined$modality == 1])
-# 
-#   # Correlation between FTP and max difference ratings
-#   correlation_max_diff_heat <- correlation_test(diff_ratings_combined$pwc[diff_ratings_combined$modality == 2], diff_ratings_combined$diff_ints_max[diff_ratings_combined$modality == 2])
-#   correlation_max_diff_pressure <- correlation_test(diff_ratings_combined$pwc[diff_ratings_combined$modality == 1], diff_ratings_combined$diff_ints_max[diff_ratings_combined$modality == 1])
-# 
-#   # Print correlations and p-values
-#   print(correlation_mean_diff_heat)
-#   print(correlation_mean_diff_pressure)
-#   print(correlation_mean_diff_plateau_heat)
-#   print(correlation_mean_diff_plateau_pressure)
-#   print(correlation_max_diff_heat)
-#   print(correlation_max_diff_pressure)
-#   
-# 
-# 
-# #----------------------------------------
-# # Peak Pain ratings and FTP at VAS 70
-# #---------------------------------------
-# 
-# # Calculate mean difference ratings by subject
-# mean_diff_ratings_sub <- mean_ratings_diff_sub %>%
-#   group_by(subject, modality,VAS_intensity) %>%
-#   summarise_at(c('diff_ints'),mean,na.rm = T)
-# 
-# # Calculate mean difference ratings plateau by subject
-# mean_diff_ratings_plateau_sub <- mean_ratings_diff_plateau_sub %>%
-#   group_by(subject, modality,VAS_intensity) %>%
-#   summarise_at(c('diff_ints'),mean,na.rm = T)
-# 
-# # Calculate max difference ratings by subject
-# max_diff_ratings_sub <- sub_max_online_ratings_diff %>%
-#   group_by(subject, modality,VAS_intensity) %>%
-#   summarise_at(c('diff_ints'),mean,na.rm = T)
-# 
-#   # Merge data frames by subject and modality
-# diff_ratings_combined <- mean_diff_ratings_sub
-# diff_ratings_combined$diff_ints_plateau <- mean_diff_ratings_plateau_sub$diff_ints
-# diff_ratings_combined$diff_ints_max <- max_diff_ratings_sub$diff_ints
-#   
-# # Add the hotspin_calib$pwc by subject
-# diff_ratings_combined <- diff_ratings_combined %>%
-#   left_join(hotspin_calib %>% select(subject, pwc), by = "subject")
-# 
-# diff_ratings_combined$modality <- as.factor(diff_ratings_combined$modality)
-# 
-# diff_ratings_combined_VAS70 <- diff_ratings_combined %>% filter(VAS_intensity == "70")
-# 
-#   # Plot correlations
-#   correlation_plot_VAS70 <- ggplot(diff_ratings_combined_VAS70, aes(x = pwc, y = diff_ints,  color = modality, fill = modality)) +
-#   geom_point(shape = 21, size = 1,alpha = 0.5) +
-#     geom_smooth(method = "lm", se = T,alpha = 0.2) +
-#     facet_wrap(~modality, labeller = as_labeller(c('1' = 'Pressure', '2' = 'Heat'))) +
-#     theme_classic() +
-#      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-#     
-#     scale_color_manual(labels = c("Pressure", "Heat"),
-#                        values = c("#1C02C7", "#C75302"))+
-#     scale_fill_manual(labels = c("Pressure", "Heat"),
-#                       values = c("#1C02C7", "#C75302"))+
-#     ylab("Mean Difference Ratings [LI-HI]") +
-#     xlab("FTP [W/kg]") +
-#     ggtitle("Correlation between  FTP (weight-corrected) and Mean Difference Ratings (Stimulus Duration) at VAS 70")
-# 
-#   correlation_plot_plateau_VAS70 <- ggplot(diff_ratings_combined_VAS70, aes(x = pwc, y = diff_ints_plateau,  color = modality, fill = modality)) +
-#   geom_point(shape = 21, size = 1,alpha = 0.5) +
-#     geom_smooth(method = "lm", se = T,alpha = 0.2) +
-#     facet_wrap(~modality, labeller = as_labeller(c('1' = 'Pressure', '2' = 'Heat'))) +
-#     theme_classic() +
-#      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-#     
-#         scale_color_manual(labels = c("Pressure", "Heat"),
-#                        values = c("#1C02C7", "#C75302"))+
-#     scale_fill_manual(labels = c("Pressure", "Heat"),
-#                       values = c("#1C02C7", "#C75302"))+
-# 
-#     xlab("FTP [W/kg]") +
-#     ylab("Mean Difference Ratings [LI-HI]") +
-#     ggtitle("Correlation between  FTP (weight-corrected) and Mean Difference Ratings (Plateau Duration) at VAS 70")
-# 
-# 
-# correlation_plot_max_VAS70 <- ggplot(diff_ratings_combined_VAS70, aes(x = pwc, y = diff_ints_max, color = modality, fill = modality)) +
-#   geom_point(shape = 21, size = 1,alpha = 0.5) +
-#   geom_smooth(method = "lm", se = T, alpha = 0.2) +
-#   facet_wrap(~modality, labeller = as_labeller(c('1' = 'Pressure', '2' = 'Heat'))) +
-#   theme_classic() +
-#    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-#     
-#     scale_color_manual(labels = c("Pressure", "Heat"),
-#                        values = c("#1C02C7", "#C75302"))+
-#     scale_fill_manual(labels = c("Pressure", "Heat"),
-#                       values = c("#1C02C7", "#C75302"))+
-#   xlab("FTP [W/kg]") +
-#   ylab("Max Difference Ratings [LI-HI]") +
-#   ggtitle("Correlation between FTP (weight-corrected) and Max Difference Ratings at VAS 70")
-# 
-#   # Calculate correlations for each plot
-#   # Calculate correlations and p-values for heat and pressure separately
-# 
-#   # Function to calculate correlation and p-value
-#   correlation_test <- function(x, y) {
-#     cor_test <- cor.test(x, y, use = "complete.obs")
-#     list(correlation = cor_test$estimate, p_value = cor_test$p.value)
-#   }
-# 
-#   # Correlation between FTP and mean difference ratings (whole stimulus duration)
-#   correlation_mean_diff_heat <- correlation_test(diff_ratings_combined_VAS70$pwc[diff_ratings_combined_VAS70$modality == 2], diff_ratings_combined_VAS70$diff_ints[diff_ratings_combined_VAS70$modality == 2])
-#   correlation_mean_diff_pressure <- correlation_test(diff_ratings_combined_VAS70$pwc[diff_ratings_combined_VAS70$modality == 1], diff_ratings_combined_VAS70$diff_ints[diff_ratings_combined_VAS70$modality == 1])
-# 
-#   # Correlation between FTP and mean difference ratings (plateau duration)
-#   correlation_mean_diff_plateau_heat <- correlation_test(diff_ratings_combined_VAS70$pwc[diff_ratings_combined_VAS70$modality == 2], diff_ratings_combined_VAS70$diff_ints_plateau[diff_ratings_combined_VAS70$modality == 2])
-#   correlation_mean_diff_plateau_pressure <- correlation_test(diff_ratings_combined_VAS70$pwc[diff_ratings_combined_VAS70$modality == 1], diff_ratings_combined_VAS70$diff_ints_plateau[diff_ratings_combined_VAS70$modality == 1])
-# 
-#   # Correlation between FTP and max difference ratings
-#   correlation_max_diff_heat <- correlation_test(diff_ratings_combined_VAS70$pwc[diff_ratings_combined_VAS70$modality == 2], diff_ratings_combined_VAS70$diff_ints_max[diff_ratings_combined_VAS70$modality == 2])
-#   correlation_max_diff_pressure <- correlation_test(diff_ratings_combined_VAS70$pwc[diff_ratings_combined_VAS70$modality == 1], diff_ratings_combined_VAS70$diff_ints_max[diff_ratings_combined_VAS70$modality == 1])
-# 
-#   # Print correlations and p-values
-#   print(correlation_mean_diff_heat)
-#   print(correlation_mean_diff_pressure)
-#   print(correlation_mean_diff_plateau_heat)
-#   print(correlation_mean_diff_plateau_pressure)
-#   print(correlation_max_diff_heat)
-#   print(correlation_max_diff_pressure)
-#   
+
+# --------------------------------------------
+# Correlation Fitness on EIH HEAT
+#-------------------------------------------
+
+
+# ---- Fitness level On difference pain ratings:  
+summary_lmer_models_main<- df_combined_heat %>%
+  group_by(subject,exercise_intensity,pwc,treatment_order,gender,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+lmer_model_df <- spread(summary_lmer_models_main, exercise_intensity, pain_rating)
+lmer_model_df$diff_hi_low_rating <- lmer_model_df$'0' -  lmer_model_df$'1'  # Low Intensity - High Intensity Data
+
+
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   pwc + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating,lmer_model_df$pwc)
+
+#------- Fitness level and Sex On difference pain ratings:  
+
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   pwc*gender + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==0],lmer_model_df$pwc[lmer_model_df$gender==0])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==1],lmer_model_df$pwc[lmer_model_df$gender==1])
+
+
+#------- Fitness level and Group On difference pain ratings:  
+lmer_model_df$group <- as.integer(lmer_model_df$group)
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   pwc*group + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==1],lmer_model_df$pwc[lmer_model_df$group==1])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==2],lmer_model_df$pwc[lmer_model_df$group==2])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==3],lmer_model_df$pwc[lmer_model_df$group==3])
 
 
 
-  # --------------------------------------------
-  # Correlation Fitness on EIH HEAT
-  #-------------------------------------------
-  
-  
-  # ---- Fitness level On difference pain ratings:  
-  summary_lmer_models_main<- df_combined_heat %>%
-    group_by(subject,exercise_intensity,pwc,treatment_order,gender,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  lmer_model_df <- spread(summary_lmer_models_main, exercise_intensity, pain_rating)
-  lmer_model_df$diff_hi_low_rating <- lmer_model_df$'0' -  lmer_model_df$'1'  # Low Intensity - High Intensity Data
-  
-  
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   pwc + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating,lmer_model_df$pwc)
-  
-  #------- Fitness level and Sex On difference pain ratings:  
+#---------------- Visualisation
 
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   pwc*gender + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==0],lmer_model_df$pwc[lmer_model_df$gender==0])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==1],lmer_model_df$pwc[lmer_model_df$gender==1])
-  
-  
-  #------- Fitness level and Group On difference pain ratings:  
-  lmer_model_df$group <- as.integer(lmer_model_df$group)
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   pwc*group + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==1],lmer_model_df$pwc[lmer_model_df$group==1])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==2],lmer_model_df$pwc[lmer_model_df$group==2])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==3],lmer_model_df$pwc[lmer_model_df$group==3])
-  
-  
-  
-  #---------------- Visualisation
-  
-  (peep_hotspin_heat_saline_fitness <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = "#024873",fill = "#024873"))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic(base_size = 11) +
-      scale_color_manual(labels = c("SAL"),
-                         values = c("#024873")) +
-      scale_fill_manual(labels = c("SAL"),
-                        values = c("#024873"))+
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-      )
+(peep_hotspin_heat_saline_fitness <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = "#024873",fill = "#024873"))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic(base_size = 11) +
+    scale_color_manual(labels = c("SAL"),
+                       values = c("#024873")) +
+    scale_fill_manual(labels = c("SAL"),
+                      values = c("#024873"))+
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
 
-  
-  #------------- Visualisation by gender:
-  
-  (peep_hotspin_heat_saline_fitness_gender <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = gender,fill = gender))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic(base_size = 11) +
-      scale_color_manual(labels = c("Female", "Male"),
-                         values = c("#AF00C7", "#C75302"))+
-      scale_fill_manual(labels = c("Female", "Male"),
-                        values = c("#AF00C7", "#C75302"))+
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-  )
-  
-  
-  #------------- Visualisation by group:
-  lmer_model_df$group <- as.factor(lmer_model_df$group)
-  (peep_hotspin_heat_saline_fitness_group <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = group,fill = group))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic(base_size = 11) +
-      scale_color_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
-                         values = c("#C75302", "#8480F2", "#1C02C7")) +
-      scale_fill_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
-                        values = c("#C75302", "#8480F2", "#1C02C7")) +
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-      )
-  
-  
-  #----------------------------------------------
-  # Calculate with training hours / week instead of FTP for heat
-  #----------------------------------------------
 
-  # ---- Training status On difference pain ratings:  
-  summary_lmer_models_main<- df_combined_heat %>%
-    group_by(subject,exercise_intensity,hours_week,treatment_order,gender,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  lmer_model_df <- spread(summary_lmer_models_main, exercise_intensity, pain_rating)
-  lmer_model_df$diff_hi_low_rating <- lmer_model_df$'0' -  lmer_model_df$'1'  # Low Intensity - High Intensity Data
-  
-  
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   hours_week + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating,lmer_model_df$hours_week)
-  
-  #------- TRAVOL and Sex On difference pain ratings:  
-  
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   hours_week*gender + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==0],lmer_model_df$hours_week[lmer_model_df$gender==0])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==1],lmer_model_df$hours_week[lmer_model_df$gender==1])
-  
-  
-  #------- Fitness level and Group On difference pain ratings:  
-  lmer_model_df$group <- as.integer(lmer_model_df$group)
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   hours_week*group + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==1],lmer_model_df$hours_week[lmer_model_df$group==1])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==2],lmer_model_df$hours_week[lmer_model_df$group==2])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==3],lmer_model_df$hours_week[lmer_model_df$group==3])
-  
-  
-  
-  #---------------- Visualisation
-  lmer_model_df$group <- as.factor(lmer_model_df$group)
-  
-  (peep_hotspin_heat_saline_fitness_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = "#024873",fill = "#024873"))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic()+
-      scale_color_manual(labels = c("SAL"),
-                         values = c("#024873")) +
-      scale_fill_manual(labels = c("SAL"),
-                        values = c("#024873"))+
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('Heat')
-  )
-  
-  
-  #------------- Visualisation by gender:
-  
-  (peep_hotspin_heat_saline_fitness_gender_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = gender,fill = gender))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic()+
-      scale_color_manual(labels = c("Female", "Male"),
-                         values = c("#AF00C7", "#C75302"))+
-      scale_fill_manual(labels = c("Female", "Male"),
-                        values = c("#AF00C7", "#C75302"))+
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-  )
-  
-  
-  #------------- Visualisation by group:
-  
-  (peep_hotspin_heat_saline_fitness_group_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = group,fill = group))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic()+
-      scale_color_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
-                         values = c("#C75302", "#8480F2", "#1C02C7")) +
-      scale_fill_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
-                        values = c("#C75302", "#8480F2", "#1C02C7")) +
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-  )
-  
+#------------- Visualisation by gender:
 
-  
-  # --------------------------------------------
-  # Correlation Fitness on EIH Pressure
-  #-------------------------------------------
-  
-  
-  # ---- Fitness level On difference pain ratings:  
-  summary_lmer_models_main<- df_combined_pressure %>%
-    group_by(subject,exercise_intensity,pwc,treatment_order,gender,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  lmer_model_df <- spread(summary_lmer_models_main, exercise_intensity, pain_rating)
-  lmer_model_df$diff_hi_low_rating <- lmer_model_df$'0' -  lmer_model_df$'1'  # Low Intensity - High Intensity Data
-  
-  
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   pwc + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating,lmer_model_df$pwc)
-  
-  #------- Fitness level and Sex On difference pain ratings:  
-  
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   pwc*gender + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==0],lmer_model_df$pwc[lmer_model_df$gender==0])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==1],lmer_model_df$pwc[lmer_model_df$gender==1])
-  
-  
-  #------- Fitness level and Group On difference pain ratings:  
-  lmer_model_df$group <- as.integer(lmer_model_df$group)
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   pwc*group + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==1],lmer_model_df$pwc[lmer_model_df$group==1])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==2],lmer_model_df$pwc[lmer_model_df$group==2])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==3],lmer_model_df$pwc[lmer_model_df$group==3])
-  
-  
-  
-  #---------------- Visualisation
-  
-  (peep_hotspin_pressure_saline_fitness <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = "#024873",fill = "#024873"))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic()+
-      scale_color_manual(labels = c("SAL"),
-                         values = c("#024873")) +
-      scale_fill_manual(labels = c("SAL"),
-                        values = c("#024873"))+
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-  )
-  
-  
-  #------------- Visualisation by gender:
-  
-  (peep_hotspin_pressure_saline_fitness_gender <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = gender,fill = gender))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic()+
-      scale_color_manual(labels = c("Female", "Male"),
-                         values = c("#AF00C7", "#C75302"))+
-      scale_fill_manual(labels = c("Female", "Male"),
-                        values = c("#AF00C7", "#C75302"))+
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-  )
-  
-  
-  #------------- Visualisation by group:
-  lmer_model_df$group <- as.factor(lmer_model_df$group)
-  (peep_hotspin_pressure_saline_fitness_group <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = group,fill = group))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic()+
-      scale_color_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
-                         values = c("#C75302", "#8480F2", "#1C02C7")) +
-      scale_fill_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
-                        values = c("#C75302", "#8480F2", "#1C02C7")) +
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-  )
-  
-  
-  #----------------------------------------------
-  # Calculate with training hours / week instead of FTP for pressure
-  #----------------------------------------------
-  
-  # ---- Training status On difference pain ratings:  
-  summary_lmer_models_main<- df_combined_pressure %>%
-    group_by(subject,exercise_intensity,hours_week,treatment_order,gender,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  lmer_model_df <- spread(summary_lmer_models_main, exercise_intensity, pain_rating)
-  lmer_model_df$diff_hi_low_rating <- lmer_model_df$'0' -  lmer_model_df$'1'  # Low Intensity - High Intensity Data
-  
-  
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   hours_week + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating,lmer_model_df$hours_week)
-  
-  #------- TRAVOL and Sex On difference pain ratings:  
-  
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   hours_week*gender + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==0],lmer_model_df$hours_week[lmer_model_df$gender==0])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==1],lmer_model_df$hours_week[lmer_model_df$gender==1])
-  
-  
-  #------- Fitness level and Group On difference pain ratings:  
-  lmer_model_df$group <- as.integer(lmer_model_df$group)
-  # fit regular model
-  lme_model_main <- lm(diff_hi_low_rating ~   hours_week*group + treatment_order, data = lmer_model_df)
-  summary(lme_model_main)
-  confint(lme_model_main)
-  
-  # Test Correlation
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==1],lmer_model_df$hours_week[lmer_model_df$group==1])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==2],lmer_model_df$hours_week[lmer_model_df$group==2])
-  cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==3],lmer_model_df$hours_week[lmer_model_df$group==3])
-  
-  
-  
-  #---------------- Visualisation
-  lmer_model_df$group <- as.factor(lmer_model_df$group)
-  
-  (peep_hotspin_pressure_saline_fitness_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = "#024873",fill = "#024873"))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic()+
-      scale_color_manual(labels = c("SAL"),
-                         values = c("#024873")) +
-      scale_fill_manual(labels = c("SAL"),
-                        values = c("#024873"))+
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('Pressure')
-  )
-  
-  
-  #------------- Visualisation by gender:
-  
-  (peep_hotspin_pressure_saline_fitness_gender_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = gender,fill = gender))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic()+
-      scale_color_manual(labels = c("Female", "Male"),
-                         values = c("#AF00C7", "#C75302"))+
-      scale_fill_manual(labels = c("Female", "Male"),
-                        values = c("#AF00C7", "#C75302"))+
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-  )
-  
-  
-  #------------- Visualisation by group:
-  
-  (peep_hotspin_pressure_saline_fitness_group_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = group,fill = group))+
-      geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-      geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-      theme_classic()+
-      scale_color_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
-                         values = c("#C75302", "#8480F2", "#1C02C7")) +
-      scale_fill_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
-                        values = c("#C75302", "#8480F2", "#1C02C7")) +
-      geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-      theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      #guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
-      #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-      ggtitle('')
-  )
-  
-  
-  
-  
-  # ---------------------------------------------
-  # Compare fit females and unfit females
-  #----------------------------------------------
-  
-  # PEEP females vs. Hotspin females (SAL)
-  
-  df_combined_females <- df_combined_heat[df_combined_heat$gender==1,]
-  
-  f_vs_f <- df_combined_females %>%
-    group_by(subject,exercise_intensity,treatment_order,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  # On Pain Rating:
-  lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ (1|subject), data = f_vs_f)
-  summary(lme_model_main_f_vs_f)
-  confint(lme_model_main)
-  
-  # Post hoc pairwise comparisons
-  emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
-  
-  # Pairwise comparisons WITHIN each group
-  contrast_within <- contrast(emm, method = "pairwise", by = "group")
-  summary(contrast_within, infer = TRUE)
-  
-  # Pairwise comparisons BETWEEN groups at each level of exercise_intensity
-  contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
-  summary(contrast_between, infer = TRUE)
-  
-  
-  # ---- Plotting
-  summary_lmer_models_main_sub<- f_vs_f %>%
-    group_by(subject,exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  summary_lmer_models_main<- f_vs_f %>%
-    group_by(exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sum_se <- summarySEwithin(summary_lmer_models_main_sub, 
-                            measurevar = "pain_rating", 
-                            withinvars  = c("group","exercise_intensity"),
-                            idvar = 'subject',
-                            na.rm = T)
-  
-  summary_lmer_models_main$se <- sum_se$se
-  summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
-  summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
-  summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
-  summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
-  
-  (f_vs_f_plot <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
-      geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
-      geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
-      geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
-      theme_classic()+
-      scale_fill_manual(labels = c("Low", "High"),
-                        values = c("#005c23", "#3C008E")) +
-      scale_color_manual(labels = c("Low", "High"),
-                         values = c("#005c23", "#3C008E")) +
-      guides(fill=guide_legend(title=""))+
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),
-            legend.title = element_text(size = legend_title_size),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      ylab('Pain Rating [VAS]')+xlab('Exercise Intensity')+ylim(0,150)+ggtitle('')+
-      scale_x_discrete(limits = c("2","3"),labels = c("Females (Previous Study)","Females (Current Study)"))
-  )
-  
-  # ---- Plotting VAS 70
-  f_vs_f_vas70 <- df_combined_females %>%
-    group_by(subject,exercise_intensity,treatment_order,group,VAS)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  f_vs_f_vas70 <- f_vs_f_vas70[f_vs_f_vas70$VAS==70,]
-  
-  summary_lmer_models_main_sub<- f_vs_f_vas70 %>%
-    group_by(subject,exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  summary_lmer_models_main<- f_vs_f_vas70 %>%
-    group_by(exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sum_se <- summarySEwithin(f_vs_f_vas70, 
-                            measurevar = "pain_rating", 
-                            withinvars  = c("group","exercise_intensity"),
-                            idvar = 'subject',
-                            na.rm = T)
-  
-  summary_lmer_models_main$se <- sum_se$se
-  summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
-  summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
-  summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
-  summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
-  
-  (f_vs_f_plot <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
-      geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
-      geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
-      geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
-      theme_classic()+
-      scale_fill_manual(labels = c("Low", "High"),
-                        values = c("#005c23", "#3C008E")) +
-      scale_color_manual(labels = c("Low", "High"),
-                         values = c("#005c23", "#3C008E")) +
-      guides(fill=guide_legend(title=""))+
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),
-            legend.title = element_text(size = legend_title_size),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      ylab('Pain Rating [VAS]')+xlab('Exercise Intensity')+ylim(0,150)+ggtitle('')+
-      scale_x_discrete(limits = c("2","3"),labels = c("Females (Previous Study)","Females (Current Study)"))
-  )
-  
-  # On Pain Rating:
-  lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ (1|subject), data = f_vs_f_vas70)
-  summary(lme_model_main_f_vs_f)
-  confint(lme_model_main)
-  # Post hoc pairwise comparisons
-  emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
-  
-  # Pairwise comparisons WITHIN each group
-  contrast_within <- contrast(emm, method = "pairwise", by = "group")
-  summary(contrast_within, infer = TRUE)
-  
-  # Pairwise comparisons BETWEEN groups at each level of exercise_intensity
-  contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
-  summary(contrast_between, infer = TRUE)
-  
-  
-  
-  #-------- Media Split (pwc) fit vs. unfit females
-  
-  df_combined_females <- df_combined_heat[df_combined_heat$gender==1,]
-  
-  f_vs_f_med_split <- df_combined_females %>%
-    group_by(subject,exercise_intensity,treatment_order,group,pwc)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  # Compute median
-  median_val <- median(f_vs_f_med_split$pwc, na.rm = TRUE)
-  
-  # Create new column with median split
-  f_vs_f_med_split$group_median_split_pwc <- ifelse(f_vs_f_med_split$pwc <= median_val, "0", "1")
-  
-  # On Pain Rating:
-  lme_model_main_f_vs_f_median_split <- lmer(pain_rating ~   exercise_intensity*group_median_split_pwc+ treatment_order+ (1|subject), data = f_vs_f_med_split)
-  summary(lme_model_main_f_vs_f_median_split)
-  confint(lme_model_main_f_vs_f_median_split)
-  
-  # Post hoc pairwise comparisons
-  emm <- emmeans(lme_model_main_f_vs_f_median_split, ~ exercise_intensity * group_median_split_pwc)
-  
-  # Pairwise comparisons WITHIN each group
-  contrast_within <- contrast(emm, method = "pairwise", by = "group_median_split_pwc")
-  summary(contrast_within, infer = TRUE)
-  
-  # Pairwise comparisons BETWEEN groups at each level of exercise_intensity
-  contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
-  summary(contrast_between, infer = TRUE)
-  
-  
-  # ---- Plotting
-  summary_lmer_models_main_sub<- f_vs_f_med_split %>%
-    group_by(subject,exercise_intensity,group_median_split_pwc)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  summary_lmer_models_main<- f_vs_f_med_split %>%
-    group_by(exercise_intensity,group_median_split_pwc)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sum_se <- summarySEwithin(f_vs_f_med_split, 
-                            measurevar = "pain_rating", 
-                            withinvars  = c("group_median_split_pwc","exercise_intensity"),
-                            idvar = 'subject',
-                            na.rm = T)
-  
-  summary_lmer_models_main$se <- sum_se$se
-  summary_lmer_models_main$group_median_split_pwc<- as.factor(summary_lmer_models_main$group_median_split_pwc)
-  summary_lmer_models_main_sub$group_median_split_pwc<- as.factor(summary_lmer_models_main_sub$group_median_split_pwc)
-  summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
-  summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
-  
-  (f_vs_f_plot_median_split <-ggplot(summary_lmer_models_main,aes(group_median_split_pwc,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
-      geom_jitter(data = summary_lmer_models_main_sub, aes(x = group_median_split_pwc,y = pain_rating),shape = 21,alpha = 0.4,size = 0.5,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
-      geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
-      geom_errorbar(aes(group_median_split_pwc,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
-      theme_classic()+
-      scale_fill_manual(labels = c("Low", "High"),
-                        values = c("#005c23", "#3C008E")) +
-      scale_color_manual(labels = c("Low", "High"),
-                         values = c("#005c23", "#3C008E")) +
-      guides(fill=guide_legend(title=""))+
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),
-            legend.title = element_text(size = legend_title_size),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      ylab('Pain Rating [VAS]')+xlab('Exercise Intensity')+ylim(0,100)+ggtitle('')+
-      scale_x_discrete(limits = c("0","1"),labels = c(" unfit females","fit Females"))
-  )
-  
-  #--------------------------------------------------------------
-  # PEEP females vs. Hotspin females (SAL) vs. PEEP males
-  #----------------------------------------------------------------
-  
-  
-  f_vs_f_m <- df_combined_heat %>%
-    group_by(subject,exercise_intensity,treatment_order,group,gender,trial,block)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
+(peep_hotspin_heat_saline_fitness_gender <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = gender,fill = gender))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic(base_size = 11) +
+    scale_color_manual(labels = c("Female", "Male"),
+                       values = c("#AF00C7", "#C75302"))+
+    scale_fill_manual(labels = c("Female", "Male"),
+                      values = c("#AF00C7", "#C75302"))+
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
 
-  f_vs_f_m$group <- as.numeric(as.character(f_vs_f_m$group))
-  f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
-  f_vs_f_m$trial <- as.factor(f_vs_f_m$trial)
-  f_vs_f_m$block <- as.factor(f_vs_f_m$block)
-  
-  # On Pain Rating:
-  lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+(1|subject)+trial + block, data = f_vs_f_m)
-  summary(lme_model_main_f_vs_f)
-  confint(lme_model_main)
-  
-  f_vs_f_m$group <- as.factor(f_vs_f_m$group)
-  f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
-  lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ (1|subject) + trial +  block, data = f_vs_f_m)
 
-  # Post hoc pairwise comparisons
-  f_vs_f_m$group <-as.factor(f_vs_f_m$group)
-  emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
-  
-  # Pairwise comparisons WITHIN each group
-  contrast_within <- contrast(emm, method = "pairwise", by = "group")
-  summary(contrast_within, infer = TRUE)
-  
-  # Pairwise comparisons BETWEEN groups at each level of exercise_intensity
-  contrast_between <- contrast(emm, method = "pairwise", by = "group")
-  summary(contrast_between, infer = TRUE)
-  
-  
-  # ---- Plotting
-  f_vs_f_m <- df_combined_heat %>%
-    group_by(subject,exercise_intensity,treatment_order,group,gender)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  f_vs_f_m$group <- as.numeric(as.character(f_vs_f_m$group))
-  f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
+#------------- Visualisation by group:
+lmer_model_df$group <- as.factor(lmer_model_df$group)
+(peep_hotspin_heat_saline_fitness_group <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = group,fill = group))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic(base_size = 11) +
+    scale_color_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
+                       values = c("#C75302", "#8480F2", "#1C02C7")) +
+    scale_fill_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
+                      values = c("#C75302", "#8480F2", "#1C02C7")) +
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
 
-  summary_lmer_models_main_sub<- f_vs_f_m %>%
-    group_by(subject,exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  summary_lmer_models_main<- f_vs_f_m %>%
-    group_by(exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sum_se <- summarySEwithin(summary_lmer_models_main_sub, 
-                            measurevar = "pain_rating", 
-                            withinvars  = c("group","exercise_intensity"),
-                            idvar = 'subject',
-                            na.rm = T)
-  
-  summary_lmer_models_main$se <- sum_se$se
-  summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
-  summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
-  summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
-  summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
-  
-  (f_vs_f_vs_m_plot <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
-      geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
-      geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
-      geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
-      theme_classic(base_size = 11) +
-      scale_fill_manual(labels = c("Low", "High"),
-                        values = c("#005c23", "#3C008E")) +
-      scale_color_manual(labels = c("Low", "High"),
-                         values = c("#005c23", "#3C008E")) +
-      guides(fill=guide_legend(title=""))+
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),
-            legend.title = element_text(size = legend_title_size),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      ylab('Pain Rating [VAS]')+xlab('')+ylim(0,100)+ggtitle('')+
-      scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
-      ggtitle('Heat (Saline, all stimulus intensities)')
-  )
-  
-  
-  # calculat ethe mean of the max ratings across subjects
-  deltas_df_f_f_m <- f_vs_f_m %>%
-    group_by(exercise_intensity,gender,group) %>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sub_deltas_df_f_f_m <- f_vs_f_m %>%
-    group_by(subject,exercise_intensity,gender,group) %>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
 
-  deltas_df_f_f_m_diff <- spread(deltas_df_f_f_m, exercise_intensity, pain_rating)
-  deltas_df_f_f_m_diff$diff_ints <- deltas_df_f_f_m_diff$'0' -  deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
-  
-  sub_deltas_df_f_f_m_diff <- spread(sub_deltas_df_f_f_m, exercise_intensity, pain_rating)
-  sub_deltas_df_f_f_m_diff$diff_ints <- sub_deltas_df_f_f_m_diff$'0' -  sub_deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
-  
-  # On Pain Rating:
-  #lme_model_main_f_vs_f <- lmer(diff_ints ~   group + (1|subject), data = sub_deltas_df_f_f_m_diff)
-  #summary(lme_model_main_f_vs_f)
-  
-  
-  sum_se <- summarySE(sub_deltas_df_f_f_m_diff, 
-                      measurevar = "diff_ints", 
-                      groupvars = c("group",'gender'),
-                      na.rm = T)
-  
-  deltas_df_f_f_m_diff$se <- sum_se$se
+#----------------------------------------------
+# Calculate with training hours / week instead of FTP for heat
+#----------------------------------------------
 
-  (deltas_param_samples <-ggplot(deltas_df_f_f_m_diff,aes(group,diff_ints))+
-      #geom_jitter(data = sub_max_online_ratings_diff,aes(x = VAS_intensity, y = diff_ints), shape = 21,alpha = 0.4,size = 0.5,position = position_jitter(width = 0.1),show.legend = F) +
-      geom_bar(stat = 'identity',alpha = 0.8,width = 0.6,colour = 'black',position = position_dodge(0.7))+
-      geom_errorbar(aes(group,ymin = diff_ints-se,ymax=diff_ints+se),colour = "black",width  =0.2,size = 0.5)+
-      theme_classic(base_size = 11) +
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating [LI - HI exercise]')+xlab('')+
-      scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
-      #ggtitle('Difference between Max Pain Rating [LI - HI exercise] Whole Stimulus Duration') +
-      geom_hline(yintercept = 0)+
-      ylim(-10,10)
-  )
-  
-  #================ VAS 70 =======================
-  f_vs_f_m <- df_combined_heat %>%
-    group_by(subject,exercise_intensity,treatment_order,group,gender,VAS,trial,block)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  f_vs_f_m_70 <- f_vs_f_m[f_vs_f_m$VAS==70,]
-  f_vs_f_m_70$group <- as.numeric(as.character(f_vs_f_m_70$group))
-  f_vs_f_m_70$exercise_intensity <- as.factor(f_vs_f_m_70$exercise_intensity)
-  f_vs_f_m_70$VAS <- as.factor(f_vs_f_m_70$VAS)
-  f_vs_f_m_70$trial <- as.factor(f_vs_f_m_70$trial)
-  f_vs_f_m_70$block <- as.factor(f_vs_f_m_70$block)
-  
-  # On Pain Rating:
-  lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ trial + block +(1|subject), data = f_vs_f_m_70)
-  summary(lme_model_main_f_vs_f)
-  confint(lme_model_main)
-  
-  # Post hoc pairwise comparisons
-  f_vs_f_m_70$group <- as.factor(f_vs_f_m_70$group)
-  f_vs_f_m_70$exercise_intensity <- as.factor(f_vs_f_m_70$exercise_intensity)
-  lme_model_main_f_vs_f_70 <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ trial + block + (1|subject), data = f_vs_f_m_70)
-  
-  emm <- emmeans(lme_model_main_f_vs_f_70, ~ exercise_intensity * group)
-  
-  # Pairwise comparisons WITHIN each group
-  contrast_within <- contrast(emm, method = "pairwise", by = "group")
-  summary(contrast_within, infer = TRUE)
-  
-  # Pairwise comparisons BETWEEN groups at each level of exercise_intensity
-  contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
-  summary(contrast_between, infer = TRUE)
-  
-  
-  # ---- Plotting
-  summary_lmer_models_main_sub<- f_vs_f_m_70 %>%
-    group_by(subject,exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  summary_lmer_models_main<- f_vs_f_m_70 %>%
-    group_by(exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sum_se <- summarySEwithin(summary_lmer_models_main_sub, 
-                            measurevar = "pain_rating", 
-                            withinvars  = c("group","exercise_intensity"),
-                            idvar = 'subject',
-                            na.rm = T)
-  
-  summary_lmer_models_main$se <- sum_se$se
-  summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
-  summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
-  summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
-  summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
-  
-  (f_vs_f_vs_m_plot_vas70 <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
-      geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
-      geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
-      geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
-      theme_classic(base_size = 11) +
-      scale_fill_manual(labels = c("Low", "High"),
-                        values = c("#005c23", "#3C008E")) +
-      scale_color_manual(labels = c("Low", "High"),
-                         values = c("#005c23", "#3C008E")) +
-      guides(fill=guide_legend(title=""))+
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),
-            legend.title = element_text(size = legend_title_size),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      ylab('Pain Rating [VAS]')+xlab('')+ylim(0,100)+ggtitle('')+
-      scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
-      ggtitle('Heat (Saline, VAS 70)')
-  )
-  
-  # calculate the mean of the max ratings across subjects
-  f_vs_f_m <- df_combined_heat %>%
-    group_by(subject,exercise_intensity,treatment_order,group,gender,VAS)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  f_vs_f_m_70 <- f_vs_f_m[f_vs_f_m$VAS==70,]
-  f_vs_f_m_70$group <- as.numeric(as.character(f_vs_f_m_70$group))
-  f_vs_f_m_70$exercise_intensity <- as.factor(f_vs_f_m_70$exercise_intensity)
-  
-  deltas_df_f_f_m_70 <- f_vs_f_m_70 %>%
-    group_by(exercise_intensity,gender,group) %>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sub_deltas_df_f_f_m_70 <- f_vs_f_m_70 %>%
-    group_by(subject,exercise_intensity,gender,group) %>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  
-  deltas_df_f_f_m_diff <- spread(deltas_df_f_f_m_70, exercise_intensity, pain_rating)
-  deltas_df_f_f_m_diff$diff_ints <- deltas_df_f_f_m_diff$'0' -  deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
-  
-  sub_deltas_df_f_f_m_diff <- spread(sub_deltas_df_f_f_m_70, exercise_intensity, pain_rating)
-  sub_deltas_df_f_f_m_diff$diff_ints <- sub_deltas_df_f_f_m_diff$'0' -  sub_deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
-  
-  # On Pain Rating:
-  #lme_model_main_f_vs_f <- lmer(diff_ints ~   group+ (1|subject), data = sub_deltas_df_f_f_m_diff)
-  #summary(lme_model_main_f_vs_f)
-  
-  
-  sum_se <- summarySE(sub_deltas_df_f_f_m_diff, 
-                      measurevar = "diff_ints", 
-                      groupvars = c("group",'gender'),
-                      na.rm = T)
-  
-  deltas_df_f_f_m_diff$se <- sum_se$se
-  
-  
-  (deltas_param_samples_vas70 <-ggplot(deltas_df_f_f_m_diff,aes(group,diff_ints))+
-      #geom_jitter(data = sub_max_online_ratings_diff,aes(x = VAS_intensity, y = diff_ints), shape = 21,alpha = 0.4,size = 0.5,position = position_jitter(width = 0.1),show.legend = F) +
-      geom_bar(stat = 'identity',alpha = 0.8,width = 0.6,colour = 'black',position = position_dodge(0.7))+
-      geom_errorbar(aes(group,ymin = diff_ints-se,ymax=diff_ints+se),colour = "black",width  =0.2,size = 0.5)+
-      theme_classic(base_size = 11) +
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating [LI - HI exercise]')+xlab('')+
-      scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
-      #ggtitle('Difference between Max Pain Rating [LI - HI exercise] Whole Stimulus Duration') +
-      geom_hline(yintercept = 0)+
-      ylim(-10,10)
-  )
-  
-  #------------------------- Pressure --------------------------
-  
-  f_vs_f_m <- df_combined_pressure %>%
-    group_by(subject,exercise_intensity,treatment_order,group,gender,trial, block)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  f_vs_f_m$group <- as.numeric(as.character(f_vs_f_m$group))
-  f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
-  f_vs_f_m$trial <- as.factor(f_vs_f_m$trial)
-  f_vs_f_m$block <- as.factor(f_vs_f_m$block)
-  
-  # On Pain Rating:
-  lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+(1|subject)+trial + block, data = f_vs_f_m)
-  summary(lme_model_main_f_vs_f)
-  confint(lme_model_main)
-  
-  f_vs_f_m$group <- as.factor(f_vs_f_m$group)
-  f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
-  lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ (1|subject) + trial +  block, data = f_vs_f_m)
-  
-  # Post hoc pairwise comparisons
-  f_vs_f_m$group <-as.factor(f_vs_f_m$group)
-  emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
-  
-  # Pairwise comparisons WITHIN each group
-  contrast_within <- contrast(emm, method = "pairwise", by = "group")
-  summary(contrast_within, infer = TRUE)
-  
-  # Pairwise comparisons BETWEEN groups at each level of exercise_intensity
-  contrast_between <- contrast(emm, method = "pairwise", by = "group")
-  summary(contrast_between, infer = TRUE)
-  
-  
-  # ---- Plotting
-  summary_lmer_models_main_sub<- f_vs_f_m %>%
-    group_by(subject,exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  summary_lmer_models_main<- f_vs_f_m %>%
-    group_by(exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sum_se <- summarySEwithin(f_vs_f_m, 
-                            measurevar = "pain_rating", 
-                            withinvars  = c("group","exercise_intensity"),
-                            idvar = 'subject',
-                            na.rm = T)
-  
-  summary_lmer_models_main$se <- sum_se$se
-  summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
-  summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
-  summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
-  summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
-  
-  (f_vs_f_vs_m_plot_pressure <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
-      geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
-      geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
-      geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
-      theme_classic()+
-      scale_fill_manual(labels = c("Low", "High"),
-                        values = c("#005c23", "#3C008E")) +
-      scale_color_manual(labels = c("Low", "High"),
-                         values = c("#005c23", "#3C008E")) +
-      guides(fill=guide_legend(title=""))+
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),
-            legend.title = element_text(size = legend_title_size),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      ylab('Pain Rating [VAS]')+xlab('')+ylim(0,100)+ggtitle('')+
-      scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
-      ggtitle('Pressure (Saline, all stimulus intensities)')
-  )
-  
-  
-  # calculat ethe mean of the max ratings across subjects
-  deltas_df_f_f_m <- f_vs_f_m %>%
-    group_by(exercise_intensity,gender,group) %>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sub_deltas_df_f_f_m <- f_vs_f_m %>%
-    group_by(subject,exercise_intensity,gender,group) %>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  
-  deltas_df_f_f_m_diff <- spread(deltas_df_f_f_m, exercise_intensity, pain_rating)
-  deltas_df_f_f_m_diff$diff_ints <- deltas_df_f_f_m_diff$'0' -  deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
-  
-  sub_deltas_df_f_f_m_diff <- spread(sub_deltas_df_f_f_m, exercise_intensity, pain_rating)
-  sub_deltas_df_f_f_m_diff$diff_ints <- sub_deltas_df_f_f_m_diff$'0' -  sub_deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
-  
-  # On Pain Rating:
-  #lme_model_main_f_vs_f <- lmer(diff_ints ~   group+ (1|subject), data = sub_deltas_df_f_f_m_diff)
-  #summary(lme_model_main_f_vs_f)
-  
-  
-  sum_se <- summarySE(sub_deltas_df_f_f_m_diff, 
-                      measurevar = "diff_ints", 
-                      groupvars = c("group",'gender'),
-                      na.rm = T)
-  
-  deltas_df_f_f_m_diff$se <- sum_se$se
-  
-  (deltas_param_samples_pressure <-ggplot(deltas_df_f_f_m_diff,aes(group,diff_ints))+
-      #geom_jitter(data = sub_max_online_ratings_diff,aes(x = VAS_intensity, y = diff_ints), shape = 21,alpha = 0.4,size = 0.5,position = position_jitter(width = 0.1),show.legend = F) +
-      geom_bar(stat = 'identity',alpha = 0.8,width = 0.6,colour = 'black',position = position_dodge(0.7))+
-      geom_errorbar(aes(group,ymin = diff_ints-se,ymax=diff_ints+se),colour = "black",width  =0.2,size = 0.5)+
-      theme_classic()+
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating [LI - HI exercise]')+xlab('')+
-      scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
-      #ggtitle('Difference between Max Pain Rating [LI - HI exercise] Whole Stimulus Duration') +
-      geom_hline(yintercept = 0)+
-      ylim(-10,10)
-  )
-  
-  #================ VAS 70 =======================
-  f_vs_f_m <- df_combined_pressure %>%
-    group_by(subject,exercise_intensity,treatment_order,group,gender,VAS,trial,block)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  f_vs_f_m <- f_vs_f_m[f_vs_f_m$VAS==70,]
-  f_vs_f_m$group <- as.numeric(as.character(f_vs_f_m$group))
-  f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
-  f_vs_f_m$VAS <- as.factor(f_vs_f_m$VAS)
-  f_vs_f_m$trial <- as.factor(f_vs_f_m$trial)
-  f_vs_f_m$block <- as.factor(f_vs_f_m$block)
-  
-  # On Pain Rating:
-  lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ trial + block +(1|subject), data = f_vs_f_m)
-  summary(lme_model_main_f_vs_f)
-  confint(lme_model_main)
-  
-  # Post hoc pairwise comparisons
-  f_vs_f_m$group <- as.factor(f_vs_f_m$group)
-  f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
-  lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ trial + block +(1|subject), data = f_vs_f_m)
-  
-  emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
-  
-  # Pairwise comparisons WITHIN each group
-  contrast_within <- contrast(emm, method = "pairwise", by = "group")
-  summary(contrast_within, infer = TRUE)
-  
-  # Pairwise comparisons BETWEEN groups at each level of exercise_intensity
-  contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
-  summary(contrast_between, infer = TRUE)
-  
-  
-  # ---- Plotting
-  summary_lmer_models_main_sub<- f_vs_f_m %>%
-    group_by(subject,exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  summary_lmer_models_main<- f_vs_f_m %>%
-    group_by(exercise_intensity,group)%>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sum_se <- summarySEwithin(f_vs_f_m, 
-                            measurevar = "pain_rating", 
-                            withinvars  = c("group","exercise_intensity"),
-                            idvar = 'subject',
-                            na.rm = T)
-  
-  summary_lmer_models_main$se <- sum_se$se
-  summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
-  summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
-  summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
-  summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
-  
-  (f_vs_f_vs_m_plot_vas70_pressure <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
-      geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
-      geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
-      geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
-      theme_classic()+
-      scale_fill_manual(labels = c("Low", "High"),
-                        values = c("#005c23", "#3C008E")) +
-      scale_color_manual(labels = c("Low", "High"),
-                         values = c("#005c23", "#3C008E")) +
-      guides(fill=guide_legend(title=""))+
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-            axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-            plot.title = element_text(size = plot_title_size,family="Helvetica"),
-            legend.title = element_text(size = legend_title_size),
-            legend.text = element_text(size = legend_title_size,family="Helvetica"),
-            strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      ylab('Pain Rating [VAS]')+xlab('')+ylim(0,100)+ggtitle('')+
-      scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
-      ggtitle('Pressure (Saline, VAS 70)')
-  )
-  
-  # calculat ethe mean of the max ratings across subjects
-  deltas_df_f_f_m <- f_vs_f_m %>%
-    group_by(exercise_intensity, VAS,gender,group) %>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  sub_deltas_df_f_f_m <- f_vs_f_m %>%
-    group_by(subject,exercise_intensity, VAS,gender,group) %>%
-    summarise_at(c('pain_rating'),mean,na.rm = T)
-  
-  deltas_df_f_f_m_diff <- spread(deltas_df_f_f_m, exercise_intensity, pain_rating)
-  deltas_df_f_f_m_diff$diff_ints <- deltas_df_f_f_m_diff$'0' -  deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
-  
-  sub_deltas_df_f_f_m_diff <- spread(sub_deltas_df_f_f_m, exercise_intensity, pain_rating)
-  sub_deltas_df_f_f_m_diff$diff_ints <- sub_deltas_df_f_f_m_diff$'0' -  sub_deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
-  
-  
-  sum_se <- summarySE(sub_deltas_df_f_f_m_diff, 
-                      measurevar = "diff_ints", 
-                      groupvars = c("group",'gender'),
-                      na.rm = T)
-  
-  deltas_df_f_f_m_diff$se <- sum_se$se
-  
-  (deltas_param_samples_vas70_pressure <-ggplot(deltas_df_f_f_m_diff,aes(group,diff_ints))+
-      #geom_jitter(data = sub_max_online_ratings_diff,aes(x = VAS_intensity, y = diff_ints), shape = 21,alpha = 0.4,size = 0.5,position = position_jitter(width = 0.1),show.legend = F) +
-      geom_bar(stat = 'identity',alpha = 0.8,width = 0.6,colour = 'black',position = position_dodge(0.7))+
-      geom_errorbar(aes(group,ymin = diff_ints-se,ymax=diff_ints+se),colour = "black",width  =0.2,size = 0.5)+
-      theme_classic()+
-      theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-      guides(fill=guide_legend(title=""))+
-      ylab('\u0394 Pain Rating [LI - HI exercise]')+xlab('')+
-      scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
-      #ggtitle('Difference between Max Pain Rating [LI - HI exercise] Whole Stimulus Duration') +
-      geom_hline(yintercept = 0)+
-      ylim(-10,10)
-  )
-  
-  
-  # 
-  # # --------------------------------------------------------------------
-  # # Mixed Model with PEEP and Hotspin: Fitness Level on Diff Pain Ratings
-  # #----------------------------------------------------------------------
-  # 
-  # df_combined_diff_summary<- df_combined_heat %>%
-  #   group_by(subject,exercise_intensity,pwc,gender,treatment_order,group)%>%
-  #   summarise_at(c('pain_rating'),mean,na.rm = T)
-  # 
-  # df_combined_diff <- spread(df_combined_diff_summary, exercise_intensity, pain_rating)
-  # df_combined_diff$diff_ints <- df_combined_diff$'0' -  df_combined_diff$'1'  # Low Intensity - High Intensity Data
-  # 
-  # # statistics
-  # lme_model_main_df_combined_diff <- lmer(diff_ints ~   pwc + treatment_order + (1|subject), data = df_combined_diff)
-  # summary(lme_model_main_df_combined_diff)
-  # confint(lme_model_main_df_combined_diff)
-  # 
-  # # Test Correlation
-  # cor.test(df_combined_diff$diff_ints,df_combined_diff$pwc)
-  # 
-  # #- Plot
-  # (corr_fitness_overall <- 
-  #     ggplot(df_combined_diff,aes(x = pwc,y=diff_ints,colour = '#024873',fill = '#024873'))+
-  #     geom_point(size = 1,shape = 21,alpha = 0.9,show.legend = F, colour = 'black')+
-  #     geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F, fullrange = F)+
-  #     theme_classic()+
-  #     geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-  #     guides(fill=guide_legend(title=""))+
-  #     scale_color_manual(labels = c("SAL"),
-  #                        values = c("#024873"))+
-  #     scale_fill_manual(labels = c("SAL"),
-  #                       values = c("#024873"))+
-  #     theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-  #           axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-  #           plot.title = element_text(size = plot_title_size,family="Helvetica"),
-  #           legend.title = element_text(size = legend_title_size),
-  #           legend.text = element_text(size = legend_title_size,family="Helvetica"),
-  #           strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-  #     ylab('\u0394 Pain Ratings\n[LI - HI Exercise Pain Rating]')+
-  #     xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
-  #     ggtitle('')
-  # )
-  # 
-  # 
-  # # --------------------------------------------------------------------
-  # # Mixed Model with PEEP and Hotspin: Fitness Level x Sex on Diff Pain Ratings
-  # #----------------------------------------------------------------------
-  # 
-  #  # statistics
-  # lme_model_main_df_combined_diff <- lmer(diff_ints ~   pwc*gender + treatment_order + (1|subject), data = df_combined_diff)
-  # summary(lme_model_main_df_combined_diff)
-  # confint(lme_model_main_df_combined_diff)
-  # 
-  # # Post hoc pairwise comparisons
-  # emm <- emmeans(lme_model_main_df_combined_diff, ~  pwc*gender)
-  # 
-  # # Calculate correlations and p-values
-  # cor1 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$gender==0], df_combined_diff$pwc[df_combined_diff$gender==0])
-  # cor2 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$gender==1], df_combined_diff$pwc[df_combined_diff$gender==1])
-  # 
-  # # Create text labels for annotations
-  # label1 <- sprintf("Males (PEEP): r = %.2f, p = %.3f", cor1$estimate, cor1$p.value)
-  # label2 <- sprintf("Females (PEEP + HotSpin): r = %.2f, p = %.3f", cor2$estimate, cor2$p.value)
-  # 
-  # (corr_fitness_gender <- 
-  #     ggplot(df_combined_diff,aes(x = pwc,y=diff_ints,fill = gender, colour = gender,group = gender))+
-  #     geom_point(size = 1,shape = 21,alpha = 0.9,show.legend = F, colour = 'black')+
-  #     geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F, fullrange = F)+
-  #     theme_classic()+
-  #     scale_color_manual(labels = c("Female (PEEP + HotSpin)", "Male (PEEP)"),
-  #                        values = c("#DC8166", "#00c4b4")) +
-  #     scale_fill_manual(labels = c("Female (PEEP + HotSpin)", "Male (PEEP)"),
-  #                       values = c("#DC8166", "#00c4b4")) +
-  #     geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-  #     guides(fill=guide_legend(title=""))+
-  #     theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-  #           axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-  #           plot.title = element_text(size = plot_title_size,family="Helvetica"),
-  #           legend.title = element_text(size = legend_title_size),
-  #           legend.text = element_text(size = legend_title_size,family="Helvetica"),
-  #           strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-  #     ylab('\u0394 Pain Ratings\n[LI - HI Exercise Pain Rating]')+
-  #     xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
-  #     annotate("text", x = Inf, y = Inf, hjust = 6.45, vjust = 4.0,
-  #              label = label1, colour = "#00c4b4", size = 3.5, parse = FALSE) +
-  #     annotate("text", x = Inf, y = Inf, hjust = 4.6, vjust = 6.0,
-  #              label = label2, colour = "#DC8166", size = 3.5, parse = FALSE)+
-  #     ggtitle('')
-  # )
-  # 
-  # # --------------------------------------------------------------------
-  # # Mixed Model with PEEP and Hotspin: Fitness Level x Group on Diff Pain Ratings
-  # #----------------------------------------------------------------------
-  # 
-  # df_combined_diff$group <- as.numeric(as.character(df_combined_diff$group))
-  # lme_model_main <- lmer(diff_ints ~   group*pwc+treatment_order+(1|subject), data = df_combined_diff)
-  # summary(lme_model_main)
-  # 
-  # 
-  # # Calculate correlations and p-values
-  # cor1 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$group==1], df_combined_diff$pwc[df_combined_diff$group==1])
-  # cor2 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$group==2], df_combined_diff$pwc[df_combined_diff$group==2])
-  # cor3 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$group==3], df_combined_diff$pwc[df_combined_diff$group==3])
-  # 
-  # # Create text labels for annotations
-  # label1 <- sprintf("Females (PEEP): r = %.2f, p = %.3f", cor1$estimate, cor1$p.value)
-  # label2 <- sprintf("Males (PEEP): r = %.2f, p = %.3f", cor2$estimate, cor2$p.value)
-  # label3 <- sprintf("Females (HotSpin): r = %.2f, p = %.3f", cor3$estimate, cor3$p.value)
-  # 
-  # # Add annotations in the respective group colors
-  # (corr_fitness_group <- 
-  #     ggplot(df_combined_diff, aes(x = pwc, y = diff_ints, fill = group, colour = group, group = group)) +
-  #     geom_point(size = 1, alpha = .9, shape = 21, show.legend = FALSE, colour = 'black') +
-  #     geom_smooth(method = 'lm', alpha = 0.1, size = 1, se = TRUE, show.legend = FALSE, fullrange = FALSE) +
-  #     theme_classic() +
-  #     scale_color_manual(labels = c("Female (PEEP)", "Male (PEEP)", "Female (HotSpin)"),
-  #                        values = c("#00c4b4", "#be00c4", "#fcac00")) +
-  #     scale_fill_manual(labels = c("Female (PEEP)", "Male (PEEP)", "Female (HotSpin)"),
-  #                       values = c("#00c4b4", "#be00c4", "#fcac00")) +
-  #     geom_hline(yintercept = 0, colour = 'black', size = 0.5) +
-  #     guides(fill = guide_legend(title = "")) +
-  #     theme(
-  #       legend.key.size = unit(0.25, 'cm'),
-  #       axis.title = element_text(size = axis_title_size, family = "Helvetica"),
-  #       axis.text = element_text(size = axis_text_size, colour = 'black', family = "Helvetica"),
-  #       plot.title = element_text(size = plot_title_size, family = "Helvetica"),
-  #       legend.title = element_text(size = legend_title_size),
-  #       legend.text = element_text(size = legend_title_size, family = "Helvetica"),
-  #       strip.text.x = element_text(size = legend_text_size, family = "Helvetica")
-  #     ) +
-  #     ylab('\u0394 Pain Ratings\n[LI - HI Exercise Pain Rating]') +
-  #     xlab(expression(paste('FTP [Watt * kg'^-1,']'))) +
-  #     ggtitle('') +
-  #     annotate("text", x = Inf, y = Inf, hjust = 6.0, vjust = 2.0,
-  #              label = label1, colour = "#be00c4", size = 3.5, parse = FALSE) +
-  #     annotate("text", x = Inf, y = Inf, hjust = 6.5, vjust = 4.0,
-  #              label = label2, colour = "#00c4b4", size = 3.5, parse = FALSE) +
-  #   annotate("text", x = Inf, y = Inf, hjust = 5.6, vjust = 6.0,
-  #            label = label3, colour = "#fcac00", size = 3.5, parse = FALSE)
-  # )
-  # 
+# ---- Training status On difference pain ratings:  
+summary_lmer_models_main<- df_combined_heat %>%
+  group_by(subject,exercise_intensity,hours_week,treatment_order,gender,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+lmer_model_df <- spread(summary_lmer_models_main, exercise_intensity, pain_rating)
+lmer_model_df$diff_hi_low_rating <- lmer_model_df$'0' -  lmer_model_df$'1'  # Low Intensity - High Intensity Data
+
+
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   hours_week + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating,lmer_model_df$hours_week)
+
+#------- TRAVOL and Sex On difference pain ratings:  
+
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   hours_week*gender + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==0],lmer_model_df$hours_week[lmer_model_df$gender==0])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==1],lmer_model_df$hours_week[lmer_model_df$gender==1])
+
+
+#------- Fitness level and Group On difference pain ratings:  
+lmer_model_df$group <- as.integer(lmer_model_df$group)
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   hours_week*group + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==1],lmer_model_df$hours_week[lmer_model_df$group==1])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==2],lmer_model_df$hours_week[lmer_model_df$group==2])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==3],lmer_model_df$hours_week[lmer_model_df$group==3])
+
+
+
+#---------------- Visualisation
+lmer_model_df$group <- as.factor(lmer_model_df$group)
+
+(peep_hotspin_heat_saline_fitness_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = "#024873",fill = "#024873"))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic()+
+    scale_color_manual(labels = c("SAL"),
+                       values = c("#024873")) +
+    scale_fill_manual(labels = c("SAL"),
+                      values = c("#024873"))+
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('Heat')
+)
+
+
+#------------- Visualisation by gender:
+
+(peep_hotspin_heat_saline_fitness_gender_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = gender,fill = gender))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic()+
+    scale_color_manual(labels = c("Female", "Male"),
+                       values = c("#AF00C7", "#C75302"))+
+    scale_fill_manual(labels = c("Female", "Male"),
+                      values = c("#AF00C7", "#C75302"))+
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
+
+
+#------------- Visualisation by group:
+
+(peep_hotspin_heat_saline_fitness_group_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = group,fill = group))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic()+
+    scale_color_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
+                       values = c("#C75302", "#8480F2", "#1C02C7")) +
+    scale_fill_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
+                      values = c("#C75302", "#8480F2", "#1C02C7")) +
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
+
+
+
+# --------------------------------------------
+# Correlation Fitness on EIH Pressure
+#-------------------------------------------
+
+
+# ---- Fitness level On difference pain ratings:  
+summary_lmer_models_main<- df_combined_pressure %>%
+  group_by(subject,exercise_intensity,pwc,treatment_order,gender,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+lmer_model_df <- spread(summary_lmer_models_main, exercise_intensity, pain_rating)
+lmer_model_df$diff_hi_low_rating <- lmer_model_df$'0' -  lmer_model_df$'1'  # Low Intensity - High Intensity Data
+
+
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   pwc + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating,lmer_model_df$pwc)
+
+#------- Fitness level and Sex On difference pain ratings:  
+
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   pwc*gender + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==0],lmer_model_df$pwc[lmer_model_df$gender==0])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==1],lmer_model_df$pwc[lmer_model_df$gender==1])
+
+
+#------- Fitness level and Group On difference pain ratings:  
+lmer_model_df$group <- as.integer(lmer_model_df$group)
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   pwc*group + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==1],lmer_model_df$pwc[lmer_model_df$group==1])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==2],lmer_model_df$pwc[lmer_model_df$group==2])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==3],lmer_model_df$pwc[lmer_model_df$group==3])
+
+
+
+#---------------- Visualisation
+
+(peep_hotspin_pressure_saline_fitness <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = "#024873",fill = "#024873"))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic()+
+    scale_color_manual(labels = c("SAL"),
+                       values = c("#024873")) +
+    scale_fill_manual(labels = c("SAL"),
+                      values = c("#024873"))+
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
+
+
+#------------- Visualisation by gender:
+
+(peep_hotspin_pressure_saline_fitness_gender <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = gender,fill = gender))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic()+
+    scale_color_manual(labels = c("Female", "Male"),
+                       values = c("#AF00C7", "#C75302"))+
+    scale_fill_manual(labels = c("Female", "Male"),
+                      values = c("#AF00C7", "#C75302"))+
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
+
+
+#------------- Visualisation by group:
+lmer_model_df$group <- as.factor(lmer_model_df$group)
+(peep_hotspin_pressure_saline_fitness_group <-  ggplot(lmer_model_df,aes(x = pwc,y=diff_hi_low_rating,colour = group,fill = group))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic()+
+    scale_color_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
+                       values = c("#C75302", "#8480F2", "#1C02C7")) +
+    scale_fill_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
+                      values = c("#C75302", "#8480F2", "#1C02C7")) +
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
+
+
+#----------------------------------------------
+# Calculate with training hours / week instead of FTP for pressure
+#----------------------------------------------
+
+# ---- Training status On difference pain ratings:  
+summary_lmer_models_main<- df_combined_pressure %>%
+  group_by(subject,exercise_intensity,hours_week,treatment_order,gender,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+lmer_model_df <- spread(summary_lmer_models_main, exercise_intensity, pain_rating)
+lmer_model_df$diff_hi_low_rating <- lmer_model_df$'0' -  lmer_model_df$'1'  # Low Intensity - High Intensity Data
+
+
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   hours_week + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating,lmer_model_df$hours_week)
+
+#------- TRAVOL and Sex On difference pain ratings:  
+
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   hours_week*gender + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==0],lmer_model_df$hours_week[lmer_model_df$gender==0])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$gender==1],lmer_model_df$hours_week[lmer_model_df$gender==1])
+
+
+#------- Fitness level and Group On difference pain ratings:  
+lmer_model_df$group <- as.integer(lmer_model_df$group)
+# fit regular model
+lme_model_main <- lm(diff_hi_low_rating ~   hours_week*group + treatment_order, data = lmer_model_df)
+summary(lme_model_main)
+confint(lme_model_main)
+
+# Test Correlation
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==1],lmer_model_df$hours_week[lmer_model_df$group==1])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==2],lmer_model_df$hours_week[lmer_model_df$group==2])
+cor.test(lmer_model_df$diff_hi_low_rating[lmer_model_df$group==3],lmer_model_df$hours_week[lmer_model_df$group==3])
+
+
+
+#---------------- Visualisation
+lmer_model_df$group <- as.factor(lmer_model_df$group)
+
+(peep_hotspin_pressure_saline_fitness_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = "#024873",fill = "#024873"))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic()+
+    scale_color_manual(labels = c("SAL"),
+                       values = c("#024873")) +
+    scale_fill_manual(labels = c("SAL"),
+                      values = c("#024873"))+
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('Pressure')
+)
+
+
+#------------- Visualisation by gender:
+
+(peep_hotspin_pressure_saline_fitness_gender_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = gender,fill = gender))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic()+
+    scale_color_manual(labels = c("Female", "Male"),
+                       values = c("#AF00C7", "#C75302"))+
+    scale_fill_manual(labels = c("Female", "Male"),
+                      values = c("#AF00C7", "#C75302"))+
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
+
+
+#------------- Visualisation by group:
+
+(peep_hotspin_pressure_saline_fitness_group_travol <-  ggplot(lmer_model_df,aes(x = hours_week,y=diff_hi_low_rating,colour = group,fill = group))+
+    geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
+    geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
+    theme_classic()+
+    scale_color_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
+                       values = c("#C75302", "#8480F2", "#1C02C7")) +
+    scale_fill_manual(labels = c("Females (current study), Females (previous study), Males (previous study)"),
+                      values = c("#C75302", "#8480F2", "#1C02C7")) +
+    geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
+    theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    #guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating\n[LI - HI Exercise Pain Rating]')+xlab(expression(paste('Training Volume (h/week)')))+
+    #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
+    ggtitle('')
+)
+
+
+
+
+# ---------------------------------------------
+# Compare fit females and unfit females
+#----------------------------------------------
+
+# PEEP females vs. Hotspin females (SAL)
+
+df_combined_females <- df_combined_heat[df_combined_heat$gender==1,]
+
+f_vs_f <- df_combined_females %>%
+  group_by(subject,exercise_intensity,treatment_order,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+# On Pain Rating:
+lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ (1|subject), data = f_vs_f)
+summary(lme_model_main_f_vs_f)
+confint(lme_model_main)
+
+# Post hoc pairwise comparisons
+emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
+
+# Pairwise comparisons WITHIN each group
+contrast_within <- contrast(emm, method = "pairwise", by = "group")
+summary(contrast_within, infer = TRUE)
+
+# Pairwise comparisons BETWEEN groups at each level of exercise_intensity
+contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
+summary(contrast_between, infer = TRUE)
+
+
+# ---- Plotting
+summary_lmer_models_main_sub<- f_vs_f %>%
+  group_by(subject,exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+summary_lmer_models_main<- f_vs_f %>%
+  group_by(exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sum_se <- summarySEwithin(summary_lmer_models_main_sub, 
+                          measurevar = "pain_rating", 
+                          withinvars  = c("group","exercise_intensity"),
+                          idvar = 'subject',
+                          na.rm = T)
+
+summary_lmer_models_main$se <- sum_se$se
+summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
+summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
+summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
+summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
+
+(f_vs_f_plot <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
+    geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
+    geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
+    geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
+    theme_classic()+
+    scale_fill_manual(labels = c("Low", "High"),
+                      values = c("#005c23", "#3C008E")) +
+    scale_color_manual(labels = c("Low", "High"),
+                       values = c("#005c23", "#3C008E")) +
+    guides(fill=guide_legend(title=""))+
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),
+          legend.title = element_text(size = legend_title_size),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    ylab('Pain Rating [VAS]')+xlab('Exercise Intensity')+ylim(0,150)+ggtitle('')+
+    scale_x_discrete(limits = c("2","3"),labels = c("Females (Previous Study)","Females (Current Study)"))
+)
+
+# ---- Plotting VAS 70
+f_vs_f_vas70 <- df_combined_females %>%
+  group_by(subject,exercise_intensity,treatment_order,group,VAS)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+f_vs_f_vas70 <- f_vs_f_vas70[f_vs_f_vas70$VAS==70,]
+
+summary_lmer_models_main_sub<- f_vs_f_vas70 %>%
+  group_by(subject,exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+summary_lmer_models_main<- f_vs_f_vas70 %>%
+  group_by(exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sum_se <- summarySEwithin(f_vs_f_vas70, 
+                          measurevar = "pain_rating", 
+                          withinvars  = c("group","exercise_intensity"),
+                          idvar = 'subject',
+                          na.rm = T)
+
+summary_lmer_models_main$se <- sum_se$se
+summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
+summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
+summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
+summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
+
+(f_vs_f_plot <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
+    geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
+    geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
+    geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
+    theme_classic()+
+    scale_fill_manual(labels = c("Low", "High"),
+                      values = c("#005c23", "#3C008E")) +
+    scale_color_manual(labels = c("Low", "High"),
+                       values = c("#005c23", "#3C008E")) +
+    guides(fill=guide_legend(title=""))+
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),
+          legend.title = element_text(size = legend_title_size),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    ylab('Pain Rating [VAS]')+xlab('Exercise Intensity')+ylim(0,150)+ggtitle('')+
+    scale_x_discrete(limits = c("2","3"),labels = c("Females (Previous Study)","Females (Current Study)"))
+)
+
+# On Pain Rating:
+lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ (1|subject), data = f_vs_f_vas70)
+summary(lme_model_main_f_vs_f)
+confint(lme_model_main)
+# Post hoc pairwise comparisons
+emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
+
+# Pairwise comparisons WITHIN each group
+contrast_within <- contrast(emm, method = "pairwise", by = "group")
+summary(contrast_within, infer = TRUE)
+
+# Pairwise comparisons BETWEEN groups at each level of exercise_intensity
+contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
+summary(contrast_between, infer = TRUE)
+
+
+
+#-------- Media Split (pwc) fit vs. unfit females
+
+df_combined_females <- df_combined_heat[df_combined_heat$gender==1,]
+
+f_vs_f_med_split <- df_combined_females %>%
+  group_by(subject,exercise_intensity,treatment_order,group,pwc)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+# Compute median
+median_val <- median(f_vs_f_med_split$pwc, na.rm = TRUE)
+
+# Create new column with median split
+f_vs_f_med_split$group_median_split_pwc <- ifelse(f_vs_f_med_split$pwc <= median_val, "0", "1")
+
+# On Pain Rating:
+lme_model_main_f_vs_f_median_split <- lmer(pain_rating ~   exercise_intensity*group_median_split_pwc+ treatment_order+ (1|subject), data = f_vs_f_med_split)
+summary(lme_model_main_f_vs_f_median_split)
+confint(lme_model_main_f_vs_f_median_split)
+
+# Post hoc pairwise comparisons
+emm <- emmeans(lme_model_main_f_vs_f_median_split, ~ exercise_intensity * group_median_split_pwc)
+
+# Pairwise comparisons WITHIN each group
+contrast_within <- contrast(emm, method = "pairwise", by = "group_median_split_pwc")
+summary(contrast_within, infer = TRUE)
+
+# Pairwise comparisons BETWEEN groups at each level of exercise_intensity
+contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
+summary(contrast_between, infer = TRUE)
+
+
+# ---- Plotting
+summary_lmer_models_main_sub<- f_vs_f_med_split %>%
+  group_by(subject,exercise_intensity,group_median_split_pwc)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+summary_lmer_models_main<- f_vs_f_med_split %>%
+  group_by(exercise_intensity,group_median_split_pwc)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sum_se <- summarySEwithin(f_vs_f_med_split, 
+                          measurevar = "pain_rating", 
+                          withinvars  = c("group_median_split_pwc","exercise_intensity"),
+                          idvar = 'subject',
+                          na.rm = T)
+
+summary_lmer_models_main$se <- sum_se$se
+summary_lmer_models_main$group_median_split_pwc<- as.factor(summary_lmer_models_main$group_median_split_pwc)
+summary_lmer_models_main_sub$group_median_split_pwc<- as.factor(summary_lmer_models_main_sub$group_median_split_pwc)
+summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
+summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
+
+(f_vs_f_plot_median_split <-ggplot(summary_lmer_models_main,aes(group_median_split_pwc,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
+    geom_jitter(data = summary_lmer_models_main_sub, aes(x = group_median_split_pwc,y = pain_rating),shape = 21,alpha = 0.4,size = 0.5,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
+    geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
+    geom_errorbar(aes(group_median_split_pwc,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
+    theme_classic()+
+    scale_fill_manual(labels = c("Low", "High"),
+                      values = c("#005c23", "#3C008E")) +
+    scale_color_manual(labels = c("Low", "High"),
+                       values = c("#005c23", "#3C008E")) +
+    guides(fill=guide_legend(title=""))+
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),
+          legend.title = element_text(size = legend_title_size),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    ylab('Pain Rating [VAS]')+xlab('Exercise Intensity')+ylim(0,100)+ggtitle('')+
+    scale_x_discrete(limits = c("0","1"),labels = c(" unfit females","fit Females"))
+)
+
+#--------------------------------------------------------------
+# PEEP females vs. Hotspin females (SAL) vs. PEEP males
+#----------------------------------------------------------------
+
+
+f_vs_f_m <- df_combined_heat %>%
+  group_by(subject,exercise_intensity,treatment_order,group,gender,trial,block)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+f_vs_f_m$group <- as.numeric(as.character(f_vs_f_m$group))
+f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
+f_vs_f_m$trial <- as.factor(f_vs_f_m$trial)
+f_vs_f_m$block <- as.factor(f_vs_f_m$block)
+
+# On Pain Rating:
+lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+(1|subject)+trial + block, data = f_vs_f_m)
+summary(lme_model_main_f_vs_f)
+confint(lme_model_main)
+
+f_vs_f_m$group <- as.factor(f_vs_f_m$group)
+f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
+lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ (1|subject) + trial +  block, data = f_vs_f_m)
+
+# Post hoc pairwise comparisons
+f_vs_f_m$group <-as.factor(f_vs_f_m$group)
+emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
+
+# Pairwise comparisons WITHIN each group
+contrast_within <- contrast(emm, method = "pairwise", by = "group")
+summary(contrast_within, infer = TRUE)
+
+# Pairwise comparisons BETWEEN groups at each level of exercise_intensity
+contrast_between <- contrast(emm, method = "pairwise", by = "group")
+summary(contrast_between, infer = TRUE)
+
+
+# ---- Plotting
+f_vs_f_m <- df_combined_heat %>%
+  group_by(subject,exercise_intensity,treatment_order,group,gender)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+f_vs_f_m$group <- as.numeric(as.character(f_vs_f_m$group))
+f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
+
+summary_lmer_models_main_sub<- f_vs_f_m %>%
+  group_by(subject,exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+summary_lmer_models_main<- f_vs_f_m %>%
+  group_by(exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sum_se <- summarySEwithin(summary_lmer_models_main_sub, 
+                          measurevar = "pain_rating", 
+                          withinvars  = c("group","exercise_intensity"),
+                          idvar = 'subject',
+                          na.rm = T)
+
+summary_lmer_models_main$se <- sum_se$se
+summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
+summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
+summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
+summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
+
+(f_vs_f_vs_m_plot <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
+    geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
+    geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
+    geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
+    theme_classic(base_size = 11) +
+    scale_fill_manual(labels = c("Low", "High"),
+                      values = c("#005c23", "#3C008E")) +
+    scale_color_manual(labels = c("Low", "High"),
+                       values = c("#005c23", "#3C008E")) +
+    guides(fill=guide_legend(title=""))+
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),
+          legend.title = element_text(size = legend_title_size),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    ylab('Pain Rating [VAS]')+xlab('')+ylim(0,100)+ggtitle('')+
+    scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
+    ggtitle('Heat (Saline, all stimulus intensities)')
+)
+
+
+# calculat ethe mean of the max ratings across subjects
+deltas_df_f_f_m <- f_vs_f_m %>%
+  group_by(exercise_intensity,gender,group) %>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sub_deltas_df_f_f_m <- f_vs_f_m %>%
+  group_by(subject,exercise_intensity,gender,group) %>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+
+deltas_df_f_f_m_diff <- spread(deltas_df_f_f_m, exercise_intensity, pain_rating)
+deltas_df_f_f_m_diff$diff_ints <- deltas_df_f_f_m_diff$'0' -  deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
+
+sub_deltas_df_f_f_m_diff <- spread(sub_deltas_df_f_f_m, exercise_intensity, pain_rating)
+sub_deltas_df_f_f_m_diff$diff_ints <- sub_deltas_df_f_f_m_diff$'0' -  sub_deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
+
+# On Pain Rating:
+#lme_model_main_f_vs_f <- lmer(diff_ints ~   group + (1|subject), data = sub_deltas_df_f_f_m_diff)
+#summary(lme_model_main_f_vs_f)
+
+
+sum_se <- summarySE(sub_deltas_df_f_f_m_diff, 
+                    measurevar = "diff_ints", 
+                    groupvars = c("group",'gender'),
+                    na.rm = T)
+
+deltas_df_f_f_m_diff$se <- sum_se$se
+
+(deltas_param_samples <-ggplot(deltas_df_f_f_m_diff,aes(group,diff_ints))+
+    #geom_jitter(data = sub_max_online_ratings_diff,aes(x = VAS_intensity, y = diff_ints), shape = 21,alpha = 0.4,size = 0.5,position = position_jitter(width = 0.1),show.legend = F) +
+    geom_bar(stat = 'identity',alpha = 0.8,width = 0.6,colour = 'black',position = position_dodge(0.7))+
+    geom_errorbar(aes(group,ymin = diff_ints-se,ymax=diff_ints+se),colour = "black",width  =0.2,size = 0.5)+
+    theme_classic(base_size = 11) +
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating [LI - HI exercise]')+xlab('')+
+    scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
+    #ggtitle('Difference between Max Pain Rating [LI - HI exercise] Whole Stimulus Duration') +
+    geom_hline(yintercept = 0)+
+    ylim(-10,10)
+)
+
+#================ VAS 70 =======================
+f_vs_f_m <- df_combined_heat %>%
+  group_by(subject,exercise_intensity,treatment_order,group,gender,VAS,trial,block)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+f_vs_f_m_70 <- f_vs_f_m[f_vs_f_m$VAS==70,]
+f_vs_f_m_70$group <- as.numeric(as.character(f_vs_f_m_70$group))
+f_vs_f_m_70$exercise_intensity <- as.factor(f_vs_f_m_70$exercise_intensity)
+f_vs_f_m_70$VAS <- as.factor(f_vs_f_m_70$VAS)
+f_vs_f_m_70$trial <- as.factor(f_vs_f_m_70$trial)
+f_vs_f_m_70$block <- as.factor(f_vs_f_m_70$block)
+
+# On Pain Rating:
+lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ trial + block +(1|subject), data = f_vs_f_m_70)
+summary(lme_model_main_f_vs_f)
+confint(lme_model_main)
+
+# Post hoc pairwise comparisons
+f_vs_f_m_70$group <- as.factor(f_vs_f_m_70$group)
+f_vs_f_m_70$exercise_intensity <- as.factor(f_vs_f_m_70$exercise_intensity)
+lme_model_main_f_vs_f_70 <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ trial + block + (1|subject), data = f_vs_f_m_70)
+
+emm <- emmeans(lme_model_main_f_vs_f_70, ~ exercise_intensity * group)
+
+# Pairwise comparisons WITHIN each group
+contrast_within <- contrast(emm, method = "pairwise", by = "group")
+summary(contrast_within, infer = TRUE)
+
+# Pairwise comparisons BETWEEN groups at each level of exercise_intensity
+contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
+summary(contrast_between, infer = TRUE)
+
+
+# ---- Plotting
+summary_lmer_models_main_sub<- f_vs_f_m_70 %>%
+  group_by(subject,exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+summary_lmer_models_main<- f_vs_f_m_70 %>%
+  group_by(exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sum_se <- summarySEwithin(summary_lmer_models_main_sub, 
+                          measurevar = "pain_rating", 
+                          withinvars  = c("group","exercise_intensity"),
+                          idvar = 'subject',
+                          na.rm = T)
+
+summary_lmer_models_main$se <- sum_se$se
+summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
+summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
+summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
+summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
+
+(f_vs_f_vs_m_plot_vas70 <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
+    geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
+    geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
+    geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
+    theme_classic(base_size = 11) +
+    scale_fill_manual(labels = c("Low", "High"),
+                      values = c("#005c23", "#3C008E")) +
+    scale_color_manual(labels = c("Low", "High"),
+                       values = c("#005c23", "#3C008E")) +
+    guides(fill=guide_legend(title=""))+
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),
+          legend.title = element_text(size = legend_title_size),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    ylab('Pain Rating [VAS]')+xlab('')+ylim(0,100)+ggtitle('')+
+    scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
+    ggtitle('Heat (Saline, VAS 70)')
+)
+
+# calculate the mean of the max ratings across subjects
+f_vs_f_m <- df_combined_heat %>%
+  group_by(subject,exercise_intensity,treatment_order,group,gender,VAS)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+f_vs_f_m_70 <- f_vs_f_m[f_vs_f_m$VAS==70,]
+f_vs_f_m_70$group <- as.numeric(as.character(f_vs_f_m_70$group))
+f_vs_f_m_70$exercise_intensity <- as.factor(f_vs_f_m_70$exercise_intensity)
+
+deltas_df_f_f_m_70 <- f_vs_f_m_70 %>%
+  group_by(exercise_intensity,gender,group) %>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sub_deltas_df_f_f_m_70 <- f_vs_f_m_70 %>%
+  group_by(subject,exercise_intensity,gender,group) %>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+
+deltas_df_f_f_m_diff <- spread(deltas_df_f_f_m_70, exercise_intensity, pain_rating)
+deltas_df_f_f_m_diff$diff_ints <- deltas_df_f_f_m_diff$'0' -  deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
+
+sub_deltas_df_f_f_m_diff <- spread(sub_deltas_df_f_f_m_70, exercise_intensity, pain_rating)
+sub_deltas_df_f_f_m_diff$diff_ints <- sub_deltas_df_f_f_m_diff$'0' -  sub_deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
+
+# On Pain Rating:
+#lme_model_main_f_vs_f <- lmer(diff_ints ~   group+ (1|subject), data = sub_deltas_df_f_f_m_diff)
+#summary(lme_model_main_f_vs_f)
+
+
+sum_se <- summarySE(sub_deltas_df_f_f_m_diff, 
+                    measurevar = "diff_ints", 
+                    groupvars = c("group",'gender'),
+                    na.rm = T)
+
+deltas_df_f_f_m_diff$se <- sum_se$se
+
+
+(deltas_param_samples_vas70 <-ggplot(deltas_df_f_f_m_diff,aes(group,diff_ints))+
+    #geom_jitter(data = sub_max_online_ratings_diff,aes(x = VAS_intensity, y = diff_ints), shape = 21,alpha = 0.4,size = 0.5,position = position_jitter(width = 0.1),show.legend = F) +
+    geom_bar(stat = 'identity',alpha = 0.8,width = 0.6,colour = 'black',position = position_dodge(0.7))+
+    geom_errorbar(aes(group,ymin = diff_ints-se,ymax=diff_ints+se),colour = "black",width  =0.2,size = 0.5)+
+    theme_classic(base_size = 11) +
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating [LI - HI exercise]')+xlab('')+
+    scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
+    #ggtitle('Difference between Max Pain Rating [LI - HI exercise] Whole Stimulus Duration') +
+    geom_hline(yintercept = 0)+
+    ylim(-10,10)
+)
+
+#------------------------- Pressure --------------------------
+
+f_vs_f_m <- df_combined_pressure %>%
+  group_by(subject,exercise_intensity,treatment_order,group,gender,trial, block)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+f_vs_f_m$group <- as.numeric(as.character(f_vs_f_m$group))
+f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
+f_vs_f_m$trial <- as.factor(f_vs_f_m$trial)
+f_vs_f_m$block <- as.factor(f_vs_f_m$block)
+
+# On Pain Rating:
+lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+(1|subject)+trial + block, data = f_vs_f_m)
+summary(lme_model_main_f_vs_f)
+confint(lme_model_main)
+
+f_vs_f_m$group <- as.factor(f_vs_f_m$group)
+f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
+lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ (1|subject) + trial +  block, data = f_vs_f_m)
+
+# Post hoc pairwise comparisons
+f_vs_f_m$group <-as.factor(f_vs_f_m$group)
+emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
+
+# Pairwise comparisons WITHIN each group
+contrast_within <- contrast(emm, method = "pairwise", by = "group")
+summary(contrast_within, infer = TRUE)
+
+# Pairwise comparisons BETWEEN groups at each level of exercise_intensity
+contrast_between <- contrast(emm, method = "pairwise", by = "group")
+summary(contrast_between, infer = TRUE)
+
+
+# ---- Plotting
+summary_lmer_models_main_sub<- f_vs_f_m %>%
+  group_by(subject,exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+summary_lmer_models_main<- f_vs_f_m %>%
+  group_by(exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sum_se <- summarySEwithin(f_vs_f_m, 
+                          measurevar = "pain_rating", 
+                          withinvars  = c("group","exercise_intensity"),
+                          idvar = 'subject',
+                          na.rm = T)
+
+summary_lmer_models_main$se <- sum_se$se
+summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
+summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
+summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
+summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
+
+(f_vs_f_vs_m_plot_pressure <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
+    geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
+    geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
+    geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
+    theme_classic()+
+    scale_fill_manual(labels = c("Low", "High"),
+                      values = c("#005c23", "#3C008E")) +
+    scale_color_manual(labels = c("Low", "High"),
+                       values = c("#005c23", "#3C008E")) +
+    guides(fill=guide_legend(title=""))+
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),
+          legend.title = element_text(size = legend_title_size),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    ylab('Pain Rating [VAS]')+xlab('')+ylim(0,100)+ggtitle('')+
+    scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
+    ggtitle('Pressure (Saline, all stimulus intensities)')
+)
+
+
+# calculat ethe mean of the max ratings across subjects
+deltas_df_f_f_m <- f_vs_f_m %>%
+  group_by(exercise_intensity,gender,group) %>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sub_deltas_df_f_f_m <- f_vs_f_m %>%
+  group_by(subject,exercise_intensity,gender,group) %>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+
+deltas_df_f_f_m_diff <- spread(deltas_df_f_f_m, exercise_intensity, pain_rating)
+deltas_df_f_f_m_diff$diff_ints <- deltas_df_f_f_m_diff$'0' -  deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
+
+sub_deltas_df_f_f_m_diff <- spread(sub_deltas_df_f_f_m, exercise_intensity, pain_rating)
+sub_deltas_df_f_f_m_diff$diff_ints <- sub_deltas_df_f_f_m_diff$'0' -  sub_deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
+
+# On Pain Rating:
+#lme_model_main_f_vs_f <- lmer(diff_ints ~   group+ (1|subject), data = sub_deltas_df_f_f_m_diff)
+#summary(lme_model_main_f_vs_f)
+
+
+sum_se <- summarySE(sub_deltas_df_f_f_m_diff, 
+                    measurevar = "diff_ints", 
+                    groupvars = c("group",'gender'),
+                    na.rm = T)
+
+deltas_df_f_f_m_diff$se <- sum_se$se
+
+(deltas_param_samples_pressure <-ggplot(deltas_df_f_f_m_diff,aes(group,diff_ints))+
+    #geom_jitter(data = sub_max_online_ratings_diff,aes(x = VAS_intensity, y = diff_ints), shape = 21,alpha = 0.4,size = 0.5,position = position_jitter(width = 0.1),show.legend = F) +
+    geom_bar(stat = 'identity',alpha = 0.8,width = 0.6,colour = 'black',position = position_dodge(0.7))+
+    geom_errorbar(aes(group,ymin = diff_ints-se,ymax=diff_ints+se),colour = "black",width  =0.2,size = 0.5)+
+    theme_classic()+
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating [LI - HI exercise]')+xlab('')+
+    scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
+    #ggtitle('Difference between Max Pain Rating [LI - HI exercise] Whole Stimulus Duration') +
+    geom_hline(yintercept = 0)+
+    ylim(-10,10)
+)
+
+#================ VAS 70 =======================
+f_vs_f_m <- df_combined_pressure %>%
+  group_by(subject,exercise_intensity,treatment_order,group,gender,VAS,trial,block)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+f_vs_f_m <- f_vs_f_m[f_vs_f_m$VAS==70,]
+f_vs_f_m$group <- as.numeric(as.character(f_vs_f_m$group))
+f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
+f_vs_f_m$VAS <- as.factor(f_vs_f_m$VAS)
+f_vs_f_m$trial <- as.factor(f_vs_f_m$trial)
+f_vs_f_m$block <- as.factor(f_vs_f_m$block)
+
+# On Pain Rating:
+lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ trial + block +(1|subject), data = f_vs_f_m)
+summary(lme_model_main_f_vs_f)
+confint(lme_model_main)
+
+# Post hoc pairwise comparisons
+f_vs_f_m$group <- as.factor(f_vs_f_m$group)
+f_vs_f_m$exercise_intensity <- as.factor(f_vs_f_m$exercise_intensity)
+lme_model_main_f_vs_f <- lmer(pain_rating ~   exercise_intensity*group+ treatment_order+ trial + block +(1|subject), data = f_vs_f_m)
+
+emm <- emmeans(lme_model_main_f_vs_f, ~ exercise_intensity * group)
+
+# Pairwise comparisons WITHIN each group
+contrast_within <- contrast(emm, method = "pairwise", by = "group")
+summary(contrast_within, infer = TRUE)
+
+# Pairwise comparisons BETWEEN groups at each level of exercise_intensity
+contrast_between <- contrast(emm, method = "pairwise", by = "exercise_intensity")
+summary(contrast_between, infer = TRUE)
+
+
+# ---- Plotting
+summary_lmer_models_main_sub<- f_vs_f_m %>%
+  group_by(subject,exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+summary_lmer_models_main<- f_vs_f_m %>%
+  group_by(exercise_intensity,group)%>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sum_se <- summarySEwithin(f_vs_f_m, 
+                          measurevar = "pain_rating", 
+                          withinvars  = c("group","exercise_intensity"),
+                          idvar = 'subject',
+                          na.rm = T)
+
+summary_lmer_models_main$se <- sum_se$se
+summary_lmer_models_main$group<- as.factor(summary_lmer_models_main$group)
+summary_lmer_models_main_sub$group<- as.factor(summary_lmer_models_main_sub$group)
+summary_lmer_models_main$exercise_intensity<- as.factor(summary_lmer_models_main$exercise_intensity)
+summary_lmer_models_main_sub$exercise_intensity<- as.factor(summary_lmer_models_main_sub$exercise_intensity)
+
+(f_vs_f_vs_m_plot_vas70_pressure <-ggplot(summary_lmer_models_main,aes(group,pain_rating, fill = exercise_intensity, colour = exercise_intensity))+
+    geom_jitter(data = summary_lmer_models_main_sub, aes(x = group,y = pain_rating),shape = 21,alpha = 0.5,size = 1,position = position_jitterdodge(jitter.width= 0.1,dodge.width = 0.7),colour = 'black')+
+    geom_bar(stat = 'identity',position = position_dodge(0.7),alpha = 0.8,width = 0.6,colour = 'black')+
+    geom_errorbar(aes(group,ymin = pain_rating-se,ymax=pain_rating+se),colour = "black",width  =0.2,size = 0.5,position = position_dodge(0.7))+
+    theme_classic()+
+    scale_fill_manual(labels = c("Low", "High"),
+                      values = c("#005c23", "#3C008E")) +
+    scale_color_manual(labels = c("Low", "High"),
+                       values = c("#005c23", "#3C008E")) +
+    guides(fill=guide_legend(title=""))+
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
+          axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
+          plot.title = element_text(size = plot_title_size,family="Helvetica"),
+          legend.title = element_text(size = legend_title_size),
+          legend.text = element_text(size = legend_title_size,family="Helvetica"),
+          strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    ylab('Pain Rating [VAS]')+xlab('')+ylim(0,100)+ggtitle('')+
+    scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
+    ggtitle('Pressure (Saline, VAS 70)')
+)
+
+# calculat ethe mean of the max ratings across subjects
+deltas_df_f_f_m <- f_vs_f_m %>%
+  group_by(exercise_intensity, VAS,gender,group) %>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+sub_deltas_df_f_f_m <- f_vs_f_m %>%
+  group_by(subject,exercise_intensity, VAS,gender,group) %>%
+  summarise_at(c('pain_rating'),mean,na.rm = T)
+
+deltas_df_f_f_m_diff <- spread(deltas_df_f_f_m, exercise_intensity, pain_rating)
+deltas_df_f_f_m_diff$diff_ints <- deltas_df_f_f_m_diff$'0' -  deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
+
+sub_deltas_df_f_f_m_diff <- spread(sub_deltas_df_f_f_m, exercise_intensity, pain_rating)
+sub_deltas_df_f_f_m_diff$diff_ints <- sub_deltas_df_f_f_m_diff$'0' -  sub_deltas_df_f_f_m_diff$'1'  # Low Intensity - High Intensity Data
+
+
+sum_se <- summarySE(sub_deltas_df_f_f_m_diff, 
+                    measurevar = "diff_ints", 
+                    groupvars = c("group",'gender'),
+                    na.rm = T)
+
+deltas_df_f_f_m_diff$se <- sum_se$se
+
+(deltas_param_samples_vas70_pressure <-ggplot(deltas_df_f_f_m_diff,aes(group,diff_ints))+
+    #geom_jitter(data = sub_max_online_ratings_diff,aes(x = VAS_intensity, y = diff_ints), shape = 21,alpha = 0.4,size = 0.5,position = position_jitter(width = 0.1),show.legend = F) +
+    geom_bar(stat = 'identity',alpha = 0.8,width = 0.6,colour = 'black',position = position_dodge(0.7))+
+    geom_errorbar(aes(group,ymin = diff_ints-se,ymax=diff_ints+se),colour = "black",width  =0.2,size = 0.5)+
+    theme_classic()+
+    theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),legend.text = element_text(size = legend_title_size,family="Helvetica"),strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
+    guides(fill=guide_legend(title=""))+
+    ylab('\u0394 Pain Rating [LI - HI exercise]')+xlab('')+
+    scale_x_discrete(limits = c("1","2","3"),labels = c("Males\n(Previous)", "Females\n(Previous)","Females\n(Current)"))+
+    #ggtitle('Difference between Max Pain Rating [LI - HI exercise] Whole Stimulus Duration') +
+    geom_hline(yintercept = 0)+
+    ylim(-10,10)
+)
+
 
 #----------------------------------------------
 # Expectation Exercise no Pain
@@ -3537,8 +3174,8 @@ sub_max_online_ratings_diff$VAS_intensity <- as.factor(sub_max_online_ratings_di
 # Load in data
 data_exercise <- read.csv('C:/Users/user/Desktop/projects/HotSpin/analyses/01_data_cleaning/hotspin_exercise_expectation.csv', sep = ',', header = T)
 names(data_exercise) <- c('SubID',"sport.SQ001.","sport.SQ002.","sport.SQ003.","sport.SQ004.", "sport.SQ005.",
-                         "sport.SQ006.","sport.SQ007.","sport.SQ008.","sport.SQ009.","sport.SQ010.","sport.SQ011.", 
-                         "sport.SQ012.","sport.SQ013.","sport.SQ014." )
+                          "sport.SQ006.","sport.SQ007.","sport.SQ008.","sport.SQ009.","sport.SQ010.","sport.SQ011.", 
+                          "sport.SQ012.","sport.SQ013.","sport.SQ014." )
 
 # Extract the number from the SubID column and replace the original values
 data_exercise$SubID <- as.numeric(gsub("[^0-9]", "", data_exercise$SubID))
@@ -3576,6 +3213,7 @@ data_exercise_pain_long_sum$se <- sum_se$se
 data_exercise_pain_long_sum$question <- as.factor(data_exercise_pain_long_sum$question)
 data_exercise_pain_long_sum_sub$question <- as.factor(data_exercise_pain_long_sum_sub$question)
 
+
 #---------- Statistics
 # Perform t-tests 
 t_test_sport_SQ007 <- t.test(data_exercise_pain_long$rating[data_exercise_pain_long$question == "sport.SQ007."], mu = 0)
@@ -3588,15 +3226,16 @@ t_test_sport_SQ014 <- t.test(data_exercise_pain_long$rating[data_exercise_pain_l
 print(t_test_sport_SQ014)
 
 #---------- Plotting
+
 pain_exp <- ggplot(data_exercise_pain_long_sum_sub, aes(question, rating)) +
   geom_jitter(width = 0.1, shape = 21, alpha = .5, size = 0.75, color = 'darkblue', fill = 'darkblue') +
   geom_boxplot(alpha = 0.5, width = 0.3, fill = '#1C02C7') +
   geom_errorbar(data = data_exercise_pain_long_sum, aes(x = question, ymin = rating - se, ymax = rating + se), position = position_dodge(5), width = .1, size = 0.75) +
   geom_point(data = data_exercise_pain_long_sum, aes(question, rating), shape = 21, colour = 'black', fill = 'black', size = 1) +
-  ylim(-3, 3) +
+  #ylim(-3, 3) +
   scale_x_discrete(limits = c("sport.SQ007.", "sport.SQ009.", "sport.SQ014."),
                    labels = c("Joint Pain", "Muscle Pain", "Whole-body Pain")) +
-  scale_y_discrete(limits = c(-3, -2, -1, 0, 1, 2, 3), labels = c('greatly reduce (-3)', "-2", "-1", "0", "1", "2", "greatly increase (3)")) +
+  #scale_y_discrete(limits = c(-3, -2, -1, 0, 1, 2, 3), labels = c('greatly reduce (-3)', "-2", "-1", "0", "1", "2", "greatly increase (3)")) +
   xlab('Pain Type') + ylab('Expectation') +
   ggtitle('Expectation of acute exercise on...') +
   theme_classic() +
@@ -3705,190 +3344,6 @@ mood_plot <- ggplot(summary_mood, aes(x = dimension, y = score, fill = pre_post)
 
 mood_plot
 
-# # --------------------------------------------------------------------
-# # Mixed Model with PEEP and Hotspin: Fitness Level on Diff Pain Ratings
-# #----------------------------------------------------------------------
-# training_hours_combined$subject <- training_hours_combined$SubID
-# training_hours_combined$subject <- as.factor(training_hours_combined$subject)
-# 
-# df_combined_heat <- left_join(df_combined_heat, training_hours_combined %>% select(subject,hours_week), by = "subject")
-# 
-# df_combined_diff_summary<- df_combined_heat %>%
-#   group_by(subject,exercise_intensity,hours_week,gender,treatment_order,group,VAS)%>%
-#   summarise_at(c('pain_rating'),mean,na.rm = T)
-# 
-# df_combined_diff_summary <- df_combined_diff_summary[df_combined_diff_summary$VAS == 70,]
-# 
-# df_combined_diff <- spread(df_combined_diff_summary, exercise_intensity, pain_rating)
-# df_combined_diff$diff_ints <- df_combined_diff$'0' -  df_combined_diff$'1'  # Low Intensity - High Intensity Data
-# 
-# df_combined_diff$subject <- as.numeric(as.character(df_combined_diff$subject))
-# 
-# # statistics
-# lme_model_main_df_combined_diff <- lmrob(diff_ints ~   hours_week + treatment_order, data = df_combined_diff)
-# summary(lme_model_main_df_combined_diff)
-# confint(lme_model_main_df_combined_diff)
-# 
-# # Test Correlation
-# cor.test(df_combined_diff$diff_ints,df_combined_diff$hours_week)
-# 
-# #- Plot
-# (corr_fitness_overall <- 
-#     ggplot(df_combined_diff,aes(x = hours_week,y=diff_ints,colour = '#024873',fill = '#024873'))+
-#     geom_point(size = 1,shape = 21,alpha = 0.9,show.legend = F, colour = 'black')+
-#     geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F, fullrange = F)+
-#     theme_classic()+
-#     geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-#     guides(fill=guide_legend(title=""))+
-#     scale_color_manual(labels = c("SAL"),
-#                        values = c("#024873"))+
-#     scale_fill_manual(labels = c("SAL"),
-#                       values = c("#024873"))+
-#     theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-#           axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-#           plot.title = element_text(size = plot_title_size,family="Helvetica"),
-#           legend.title = element_text(size = legend_title_size),
-#           legend.text = element_text(size = legend_title_size,family="Helvetica"),
-#           strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-#     ylab('\u0394 Pain Ratings\n[LI - HI Exercise Pain Rating]')+
-#     xlab(expression(paste('Training Volume [h/week]'))) +
-#     ggtitle('')
-# )
-# 
-# 
-# # --------------------------------------------------------------------
-# # Mixed Model with PEEP and Hotspin: Training Volume x Sex on Diff Pain Ratings
-# #----------------------------------------------------------------------
-# library(robustbase)
-# 
-# # statistics
-# lme_model_main_df_combined_diff <- lmrob(diff_ints ~   hours_week*gender + treatment_order, data = df_combined_diff)
-# summary(lme_model_main_df_combined_diff)
-# confint(lme_model_main_df_combined_diff)
-# 
-# # Post hoc pairwise comparisons
-# emm <- emmeans(lme_model_main_df_combined_diff, ~  hours_week*gender)
-# 
-# # Calculate correlations and p-values
-# cor1 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$gender==0], df_combined_diff$hours_week[df_combined_diff$gender==0])
-# cor2 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$gender==1], df_combined_diff$hours_week[df_combined_diff$gender==1])
-# 
-# # Create text labels for annotations
-# label1 <- sprintf("Males (PEEP): r = %.2f, p = %.3f", cor1$estimate, cor1$p.value)
-# label2 <- sprintf("Females (PEEP + HotSpin): r = %.2f, p = %.3f", cor2$estimate, cor2$p.value)
-# 
-# (corr_fitness_gender <- 
-#     ggplot(df_combined_diff,aes(x = hours_week,y=diff_ints,fill = gender, colour = gender,group = gender))+
-#     geom_point(size = 1,shape = 21,alpha = 0.9,show.legend = F, colour = 'black')+
-#     geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F, fullrange = F)+
-#     theme_classic()+
-#     scale_color_manual(labels = c("Female (PEEP + HotSpin)", "Male (PEEP)"),
-#                        values = c("#DC8166", "#00c4b4")) +
-#     scale_fill_manual(labels = c("Female (PEEP + HotSpin)", "Male (PEEP)"),
-#                       values = c("#DC8166", "#00c4b4")) +
-#     geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-#     guides(fill=guide_legend(title=""))+
-#     theme(legend.key.size = unit(0.25, 'cm'),axis.title = element_text(size = axis_title_size,family="Helvetica"),
-#           axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-#           plot.title = element_text(size = plot_title_size,family="Helvetica"),
-#           legend.title = element_text(size = legend_title_size),
-#           legend.text = element_text(size = legend_title_size,family="Helvetica"),
-#           strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-#     ylab('\u0394 Pain Ratings\n[LI - HI Exercise Pain Rating]')+
-#     xlab(expression(paste('Training Volume [h/week]'))) +
-#     annotate("text", x = Inf, y = Inf, hjust = 6.45, vjust = 4.0,
-#              label = label1, colour = "#00c4b4", size = 3.5, parse = FALSE) +
-#     annotate("text", x = Inf, y = Inf, hjust = 4.6, vjust = 6.0,
-#              label = label2, colour = "#DC8166", size = 3.5, parse = FALSE)+
-#     ggtitle('')
-# )
-# 
-# # --------------------------------------------------------------------
-# # Mixed Model with PEEP and Hotspin: Fitness Level x Group on Diff Pain Ratings
-# #----------------------------------------------------------------------
-# 
-# lme_model_main <- lmrob(diff_ints ~   group*hours_week+treatment_order, data = df_combined_diff)
-# summary(lme_model_main)
-# 
-# 
-# # Calculate correlations and p-values
-# cor1 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$group==1], df_combined_diff$hours_week[df_combined_diff$group==1])
-# cor2 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$group==2], df_combined_diff$hours_week[df_combined_diff$group==2])
-# cor3 <- cor.test(df_combined_diff$diff_ints[df_combined_diff$group==3], df_combined_diff$hours_week[df_combined_diff$group==3])
-# 
-# # Create text labels for annotations
-# label1 <- sprintf("Females (PEEP): r = %.2f, p = %.3f", cor1$estimate, cor1$p.value)
-# label2 <- sprintf("Males (PEEP): r = %.2f, p = %.3f", cor2$estimate, cor2$p.value)
-# label3 <- sprintf("Females (HotSpin): r = %.2f, p = %.3f", cor3$estimate, cor3$p.value)
-# 
-# # Add annotations in the respective group colors
-# (corr_fitness_group <- 
-#     ggplot(df_combined_diff, aes(x = hours_week, y = diff_ints, fill = group, colour = group, group = group)) +
-#     geom_point(size = 1, alpha = .9, shape = 21, show.legend = TRUE, colour = 'black') +
-#     geom_smooth(method = 'lm', alpha = 0.1, size = 1, se = TRUE, show.legend = FALSE, fullrange = FALSE) +
-#     theme_classic() +
-#     scale_color_manual(labels = c("Female (PEEP)", "Male (PEEP)", "Female (HotSpin)"),
-#                        values = c("#00c4b4", "#be00c4", "#fcac00")) +
-#     scale_fill_manual(labels = c("Female (PEEP)", "Male (PEEP)", "Female (HotSpin)"),
-#                       values = c("#00c4b4", "#be00c4", "#fcac00")) +
-#     geom_hline(yintercept = 0, colour = 'black', size = 0.5) +
-#     #guides(fill = guide_legend(title = "")) +
-#     theme(
-#       legend.key.size = unit(0.25, 'cm'),
-#       axis.title = element_text(size = axis_title_size, family = "Helvetica"),
-#       axis.text = element_text(size = axis_text_size, colour = 'black', family = "Helvetica"),
-#       plot.title = element_text(size = plot_title_size, family = "Helvetica"),
-#       legend.title = element_text(size = legend_title_size),
-#       legend.text = element_text(size = legend_title_size, family = "Helvetica"),
-#       strip.text.x = element_text(size = legend_text_size, family = "Helvetica")
-#     ) +
-#     ylab('\u0394 Pain Ratings\n[LI - HI Exercise Pain Rating]') +
-#     xlab(expression(paste('Training Volume [h/week]'))) +
-#     ggtitle('') +
-#     annotate("text", x = Inf, y = Inf, hjust = 6.0, vjust = 2.0,
-#              label = label1, colour = "#be00c4", size = 3.5, parse = FALSE) +
-#     annotate("text", x = Inf, y = Inf, hjust = 6.5, vjust = 4.0,
-#              label = label2, colour = "#00c4b4", size = 3.5, parse = FALSE) +
-#     annotate("text", x = Inf, y = Inf, hjust = 5.6, vjust = 6.0,
-#              label = label3, colour = "#fcac00", size = 3.5, parse = FALSE)
-# )
-# 
-# ggarrange(corr_fitness_overall+rremove('legend'), corr_fitness_group  +rremove('legend'),corr_fitness_gender +rremove('legend'),ncol = 3, nrow = 1, labels = c("A", "B","C"), font.label = list(size = 11))
-# 
-# #ggsave(paste(save_path,'correlation_training_volume_samples.svg'), width = 17, height = 7, units = "cm")
-# #ggsave(paste(save_path,'correlation_training_volume_samples.png'), width = 17, height = 7, units = "cm")
-# 
-# # -- Correlation Fitenss and Training volumne
-# summary_lmer_models_main<- df_combined_heat %>%
-#   group_by(subject,pwc,hours_week,gender,group)%>%
-#   summarise_at(c('pain_rating'),mean,na.rm = T)
-# 
-# cor.test(summary_lmer_models_main$pwc,summary_lmer_models_main$hours_week)
-# 
-# (corr_fitness_travol <- ggplot(summary_lmer_models_main,aes(x = pwc,y=hours_week,colour = "#024873",fill = "#024873"))+
-#     geom_point(size = 0.5,aes(colour = exercise_intensity),shape = 21,colour = 'black',alpha = 0.6,show.legend = F)+
-#     geom_smooth(method = 'lm',alpha = 0.1,size = 1,se = T,show.legend = F)+
-#     theme_classic()+
-#     scale_color_manual(labels = c("SAL"),
-#                        values = c("#024873")) +
-#     scale_fill_manual(labels = c("SAL"),
-#                       values = c("#024873"))+
-#     geom_hline(yintercept = 0,colour = 'black',size = 0.5)+
-#     theme(axis.title = element_text(size = axis_title_size,family="Helvetica"),
-#           axis.text = element_text(size = axis_text_size,colour = 'black',family="Helvetica"),
-#           plot.title = element_text(size = plot_title_size,family="Helvetica"),legend.title = element_text(size = axis_title_size,family="Helvetica"),
-#           legend.text = element_text(size = legend_title_size,family="Helvetica"),
-#           strip.text.x = element_text(size = legend_text_size,family="Helvetica")) +
-#   #guides(fill=guide_legend(title=""))+
-#   ylab('Training Volume (h/week)')+xlab(expression(paste('FTP [Watt * kg'^-1,']')))+
-#   #stat_cor(method = "pearson",alternative = 'two.sided',label.sep = "\n", size = 2,show.legend = F,colour = 'black')+
-#   ggtitle('FTP and Training Volume'))
-# 
-# ggarrange(corr_fitness_travol+rremove('legend'),ncol = 1, nrow = 1, labels = c("A"), font.label = list(size = 11))
-# 
-# #ggsave(paste(save_path,'correlation_fitness_training_volume_samples.svg'), width = 5, height = 5, units = "cm")
-# #ggsave(paste(save_path,'correlation_fitness_training_volume_samples.png'), width = 5, height = 5, units = "cm")
-# 
 
 ##################################################################################
 ##       Arrange Graphs
@@ -3919,34 +3374,34 @@ ggarrange(power_cycling,rel_power_cycling,hr_cycling, borg_rating,ncol = 4, nrow
 
 
 # ---------------Max ratings 
-  ggarrange(max_ratings_whole_across_VAS+rremove('legend'), max_ratings_whole+rremove('legend'), deltas_param_max, labels = c("A", "B","C"),
-            font.label = list(size = 11), align = 'hv', ncol = 3, widths = c(0.9, 1.1, 0.9))
+ggarrange(max_ratings_whole_across_VAS+rremove('legend'), max_ratings_whole+rremove('legend'), deltas_param_max, labels = c("A", "B","C"),
+          font.label = list(size = 11), align = 'hv', ncol = 3, widths = c(0.9, 1.1, 0.9))
 
 
 #ggsave(paste(save_path,'overview_results_pain_ratings.svg'), width = 17, height = 12, units = "cm")
 #ggsave(paste(save_path,'overview_results_pain_ratings.png'), width = 17, height = 12, units = "cm")
 
-  
-  #---------- Comparison PEEP Sample 
-  
-  # Heat
-  ggarrange(
-    ggarrange(f_vs_f_vs_m_plot+rremove('legend'), deltas_param_samples, labels = c("A", "B"), 
-              font.label = list(size = 11), align = 'hv', ncol = 2, widths = c(1.1, 1)),
-    ggarrange(f_vs_f_vs_m_plot_vas70+rremove('legend'), deltas_param_samples_vas70, labels = c("C", "D"), 
-              font.label = list(size = 11), align = 'hv', ncol = 2, widths = c(1.1, 1)),nrow = 2
-  )
-  
+
+#---------- Comparison PEEP Sample 
+
+# Heat
+ggarrange(
+  ggarrange(f_vs_f_vs_m_plot+rremove('legend'), deltas_param_samples, labels = c("A", "B"), 
+            font.label = list(size = 11), align = 'hv', ncol = 2, widths = c(1.1, 1)),
+  ggarrange(f_vs_f_vs_m_plot_vas70+rremove('legend'), deltas_param_samples_vas70, labels = c("C", "D"), 
+            font.label = list(size = 11), align = 'hv', ncol = 2, widths = c(1.1, 1)),nrow = 2
+)
+
 #ggsave(paste(save_path,'peep_hotspin_overview_results_heat_pain_ratings.svg'), width = 13, height = 13, units = "cm", device = "svg")
 #ggsave(paste(save_path,'peep_hotspin_overview_results_heat_pain_ratings.png'), width = 13, height = 13, units = "cm", device = "png")
-  
-  
-  
-  # Correlation FTP , Sex and Pain (HEAT)
-  ggarrange(peep_hotspin_heat_saline_fitness,peep_hotspin_heat_saline_fitness_gender,peep_hotspin_heat_saline_fitness_group,ncol = 3,labels = c("A", "B", "C"), font.label = list(size = 11))
+
+
+
+# Correlation FTP , Sex and Pain (HEAT)
+ggarrange(peep_hotspin_heat_saline_fitness,peep_hotspin_heat_saline_fitness_gender,peep_hotspin_heat_saline_fitness_group,ncol = 3,labels = c("A", "B", "C"), font.label = list(size = 11))
 #  ggsave(paste(save_path,'comp_peep_hotspin_fitness_sex.svg'), width = 15, height = 6, units = "cm")
 #  ggsave(paste(save_path,'comp_peep_hotspin_fitness_sex.png'), width = 15, height = 6, units = "cm")
-  
+
 #=======================================================
 
 # SUPPLEMENTS
@@ -3964,10 +3419,10 @@ ggarrange(ggarrange(
 #ggsave(paste(save_path,'heat_pressure_calib_online_ratings_supplements.png'), width = 10, height = 10, units = "cm")
 
 #---------------- Menstural cycle pahse
-ggarrange(cycle_phase_distribution,pain_exp, mood_plot,labels = c("A","B","C"), font.label = list(size = 11), ncol = 3, align = 'hv',widths = c(0.8, 1,1))
+ggarrange(cycle_phase_distribution,pain_exp, mood_plot,labels = c("A","B","C"), font.label = list(size = 11), ncol = 3,widths = c(0.8, 0.9,1.3))
 
-#ggsave(paste(save_path,'cyclePhase_expectation_mood_supplements.png'), width = 15, height = 7, units = "cm")
-#ggsave(paste(save_path,'cyclePhase_expectation_mood_supplements.svg'), width = 15, height = 7, units = "cm")
+#ggsave(paste(save_path,'cyclePhase_expectation_mood_supplements.png'), width = 25, height = 10, units = "cm")
+#ggsave(paste(save_path,'cyclePhase_expectation_mood_supplements.svg'), width = 25, height = 10, units = "cm")
 
 # -------------- Sample comparison (SUPPLEMENTS)
 ggarrange(
@@ -4004,18 +3459,10 @@ ggarrange(online_rating_VAS,ncol = 1,common.legend = T,legend = 'none',align = '
 ggarrange(
   ggarrange(pressure_online_rating_across_VAS+rremove('legend'),heat_online_rating_across_VAS+rremove('legend'),labels = c("A","B"),font.label = list(size = 11),widths = c(1,1)),
   ggarrange(max_ratings_whole+rremove('legend'), deltas_param_max, labels = c("C", "D"),
-          font.label = list(size = 11), align = 'hv', ncol = 2, widths = c(1.1, 0.9)),nrow = 2
+            font.label = list(size = 11), align = 'hv', ncol = 2, widths = c(1.1, 0.9)),nrow = 2
 )
 #ggsave(paste(save_path,'overview_results_online_max_ratings.svg'), width = 15, height = 12, units = "cm")
 
-
-
-
-#---------------- Menstural cycle pahse
-ggarrange(cycle_phase_distribution,pain_exp, mood_plot,labels = c("A","B","C"), font.label = list(size = 11), ncol = 3, align = 'hv',widths = c(0.8, 1,1))
-
-#ggsave(paste(save_path,'raincloud_pwc_group.svg'), width = 8, height = 10, units = "cm")
-#ggsave(paste(save_path,'expectation_cycle_phase_mood.png'), width = 24, height = 8, units = "cm")
 
 
 # ------------ FTP and Difference Pain ratings
@@ -4064,11 +3511,11 @@ ggarrange(peep_hotspin_pressure_saline_fitness_travol,peep_hotspin_pressure_sali
 # Correlation Training Volume , Sex and Pain Heat + Pressure
 ggarrange(
   ggarrange(peep_hotspin_pressure_saline_fitness_travol,peep_hotspin_pressure_saline_fitness_gender_travol,peep_hotspin_pressure_saline_fitness_group_travol,ncol = 3,labels = c("A", "B", "C"), font.label = list(size = 11)),
-            ggarrange(peep_hotspin_heat_saline_fitness_travol,peep_hotspin_heat_saline_fitness_gender_travol,peep_hotspin_heat_saline_fitness_group_travol,ncol = 3,labels = c("D", "E", "F"), font.label = list(size = 11)), 
+  ggarrange(peep_hotspin_heat_saline_fitness_travol,peep_hotspin_heat_saline_fitness_gender_travol,peep_hotspin_heat_saline_fitness_group_travol,ncol = 3,labels = c("D", "E", "F"), font.label = list(size = 11)), 
   nrow  = 2
 )
-            
 
-  
- ggsave(paste(save_path,'comp_peep_hotspin_travol_sex.svg'), width = 17, height = 12, units = "cm")
+
+
+ggsave(paste(save_path,'comp_peep_hotspin_travol_sex.svg'), width = 17, height = 12, units = "cm")
 ggsave(paste(save_path,'comp_peep_hotspin_travol_sex.png'), width = 17, height = 12, units = "cm")
